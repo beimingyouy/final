@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zy.user.dao.UserMapper">
+	<resultMap id="BaseResultMap" type="com.zy.user.entities.User">
+		<id column="USERID" property="userid" jdbcType="DECIMAL" />
+		<result column="USERNAME" property="username" jdbcType="VARCHAR" />
+		<result column="TRUENAME" property="truename" jdbcType="VARCHAR" />
+		<result column="SEX" property="sex" jdbcType="DECIMAL" />
+		<result column="ADDRESS" property="address" jdbcType="VARCHAR" />
+		<result column="PASSWORD" property="password" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		USERID, USERNAME, TRUENAME, SEX, ADDRESS, PASSWORD
+	</sql>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from T_USER
+		where USERNAME = #{username,jdbcType=VARCHAR}
+	</select>
+
+	<select id="getTotal" resultType="INTEGER">
+		select
+		count(*)
+		from (
+		select * from t_user
+		<where>
+			<if test="username!=null and username != ''">
+				AND USERNAME like '%' || #{username,jdbcType=VARCHAR} || '%'
+			</if>
+			<if test="sex!=null and sex!= 3">
+				AND SEX=#{sex,jdbcType=DECIMAL}
+			</if>
+		</where>
+		)
+	</select>
+	<select id="queryAll" resultMap="BaseResultMap">
+		SELECT * FROM
+		(
+		SELECT A.*, rownum r
+		FROM
+		(select * from t_user
+		<where>
+			<if test="username!=null and username != ''">
+				AND USERNAME like '%' || #{username,jdbcType=VARCHAR} || '%'
+			</if>
+			<if test="sex!=null and sex!= 3">
+				AND SEX=#{sex,jdbcType=DECIMAL}
+			</if>
+
+		</where>
+		)A
+		WHERE rownum &lt;= #{end,jdbcType=DECIMAL}
+		) B
+		WHERE r &gt;#{start,jdbcType=DECIMAL} order by USERID asc
+	</select>
+
+
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from T_USER
+		where USERID = #{userid,jdbcType=DECIMAL}
+	</delete>
+	<insert id="insert" parameterType="com.zy.user.entities.User">
+		insert into T_USER (USERID,
+		USERNAME, TRUENAME,
+		SEX, ADDRESS, PASSWORD
+		)
+		values
+		(#{userid,jdbcType=DECIMAL}, #{username,jdbcType=VARCHAR},
+		#{truename,jdbcType=VARCHAR},
+		#{sex,jdbcType=DECIMAL},
+		#{address,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.zy.user.entities.User">
+		insert into T_USER
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			USERID,
+			<if test="username != null">
+				USERNAME,
+			</if>
+			<if test="truename != null">
+				TRUENAME,
+			</if>
+			<if test="sex != null">
+				SEX,
+			</if>
+			<if test="address != null">
+				ADDRESS,
+			</if>
+			<if test="password != null">
+				PASSWORD,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			T_USER_SEQUENCE.NEXTVAL,
+
+			<if test="username != null">
+				#{username,jdbcType=VARCHAR},
+			</if>
+			<if test="truename != null">
+				#{truename,jdbcType=VARCHAR},
+			</if>
+			<if test="sex != null">
+				#{sex,jdbcType=DECIMAL},
+			</if>
+			<if test="address != null">
+				#{address,jdbcType=VARCHAR},
+			</if>
+			<if test="password != null">
+				#{password,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	
+	<update id="updateByPrimaryKeySelective" parameterType="com.zy.user.entities.User">
+		update T_USER
+		<set>
+			<if test="username != null">
+				USERNAME = #{username,jdbcType=VARCHAR},
+			</if>
+			<if test="truename != null">
+				TRUENAME = #{truename,jdbcType=VARCHAR},
+			</if>
+			<if test="sex != null">
+				SEX = #{sex,jdbcType=DECIMAL},
+			</if>
+			<if test="address != null">
+				ADDRESS = #{address,jdbcType=VARCHAR},
+			</if>
+			<if test="password != null">
+				PASSWORD = #{password,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where USERID = #{userid,jdbcType=DECIMAL}
+	</update>
+	
+	<update id="updateByPrimaryKey" parameterType="com.zy.user.entities.User">
+		update T_USER
+		set
+		USERNAME = #{username,jdbcType=VARCHAR},
+		TRUENAME =
+		#{truename,jdbcType=VARCHAR},
+		SEX = #{sex,jdbcType=DECIMAL},
+		ADDRESS =
+		#{address,jdbcType=VARCHAR},
+		PASSWORD = #{password,jdbcType=VARCHAR}
+		where USERID = #{userid,jdbcType=DECIMAL}
+	</update>
+</mapper>

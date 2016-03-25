@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zy.role.dao.RoleMapper">
+	<resultMap id="BaseResultMap" type="com.zy.role.entities.Role">
+		<id column="ROLE_ID" property="roleId" jdbcType="DECIMAL" />
+		<result column="ROLE_NAME" property="roleName" jdbcType="VARCHAR" />
+		<result column="ROLE_CODE" property="roleCode" jdbcType="VARCHAR" />
+		<result column="CREATER_ID" property="createrId" jdbcType="DECIMAL" />
+		<result column="IS_SYS" property="isSys" jdbcType="DECIMAL" />
+		<result column="ENABLE" property="enable" jdbcType="DECIMAL" />
+		<result column="NOTE" property="note" jdbcType="VARCHAR" />
+		<result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		ROLE_ID, ROLE_NAME, ROLE_CODE, CREATER_ID, IS_SYS, ENABLE,
+		NOTE, CREATE_DATE,
+		UPDATE_DATE
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from T_ROLE
+		where ROLE_ID = #{roleId,jdbcType=DECIMAL}
+	</select>
+
+	<select id="querybyName" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from T_ROLE
+		where ROLE_NAME = #{roleName,jdbcType=VARCHAR}
+	</select>
+
+	<delete id="deleteByPrimaryKey">
+		delete from T_ROLE
+		where ROLE_ID = #{roleId,jdbcType=DECIMAL}
+	</delete>
+	<insert id="insert" parameterType="com.zy.role.entities.Role">
+		insert into T_ROLE (ROLE_ID,
+		ROLE_NAME, ROLE_CODE,
+		CREATER_ID, IS_SYS, ENABLE,
+		NOTE, CREATE_DATE,
+		UPDATE_DATE
+		)
+		values (#{roleId,jdbcType=DECIMAL},
+		#{roleName,jdbcType=VARCHAR},
+		#{roleCode,jdbcType=VARCHAR},
+		#{createrId,jdbcType=DECIMAL}, #{isSys,jdbcType=DECIMAL},
+		#{enable,jdbcType=DECIMAL},
+		#{note,jdbcType=VARCHAR},
+		#{createDate,jdbcType=TIMESTAMP},
+		#{updateDate,jdbcType=TIMESTAMP}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.zy.role.entities.Role">
+		insert into T_ROLE
+		<trim prefix="(" suffix=")" suffixOverrides=",">		
+				ROLE_ID,
+			<if test="roleName != null">
+				ROLE_NAME,
+			</if>
+			<if test="roleCode != null">
+				ROLE_CODE,
+			</if>
+			<if test="createrId != null">
+				CREATER_ID,
+			</if>
+			<if test="isSys != null">
+				IS_SYS,
+			</if>
+			<if test="enable != null">
+				ENABLE,
+			</if>
+			<if test="note != null">
+				NOTE,
+			</if>
+			<if test="createDate != null">
+				CREATE_DATE,
+			</if>
+			<if test="updateDate != null">
+				UPDATE_DATE,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			ROLE_SEQUENCE.NEXTVAL,
+			<if test="roleName != null">
+				#{roleName,jdbcType=VARCHAR},
+			</if>
+			<if test="roleCode != null">
+				#{roleCode,jdbcType=VARCHAR},
+			</if>
+			<if test="createrId != null">
+				#{createrId,jdbcType=DECIMAL},
+			</if>
+			<if test="isSys != null">
+				#{isSys,jdbcType=DECIMAL},
+			</if>
+			<if test="enable != null">
+				#{enable,jdbcType=DECIMAL},
+			</if>
+			<if test="note != null">
+				#{note,jdbcType=VARCHAR},
+			</if>
+			<if test="createDate != null">
+				#{createDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateDate != null">
+				#{updateDate,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.zy.role.entities.Role">
+		update T_ROLE
+		<set>
+			<if test="roleName != null">
+				ROLE_NAME = #{roleName,jdbcType=VARCHAR},
+			</if>
+			<if test="roleCode != null">
+				ROLE_CODE = #{roleCode,jdbcType=VARCHAR},
+			</if>
+			<if test="createrId != null">
+				CREATER_ID = #{createrId,jdbcType=DECIMAL},
+			</if>
+			<if test="isSys != null">
+				IS_SYS = #{isSys,jdbcType=DECIMAL},
+			</if>
+			<if test="enable != null">
+				ENABLE = #{enable,jdbcType=DECIMAL},
+			</if>
+			<if test="note != null">
+				NOTE = #{note,jdbcType=VARCHAR},
+			</if>
+			<if test="createDate != null">
+				CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+			</if>
+				UPDATE_DATE = sysdate,
+		</set>
+		where ROLE_ID = #{roleId,jdbcType=DECIMAL}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.zy.role.entities.Role">
+		update T_ROLE
+		set
+		ROLE_NAME = #{roleName,jdbcType=VARCHAR},
+		ROLE_CODE =
+		#{roleCode,jdbcType=VARCHAR},
+		CREATER_ID =
+		#{createrId,jdbcType=DECIMAL},
+		IS_SYS = #{isSys,jdbcType=DECIMAL},
+		ENABLE = #{enable,jdbcType=DECIMAL},
+		NOTE = #{note,jdbcType=VARCHAR},
+		CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+		UPDATE_DATE =
+		#{updateDate,jdbcType=TIMESTAMP}
+		where ROLE_ID =
+		#{roleId,jdbcType=DECIMAL}
+	</update>
+
+	<select id="queryAll" resultMap="BaseResultMap" parameterType="INTEGER">
+		SELECT * FROM
+		(
+		SELECT A.*, rownum r
+		FROM
+		(select * from t_role
+		<where>
+			<if test="roleName!=null and roleName!=null != ''">
+				AND ROLE_NAME like '%' || #{roleName,jdbcType=VARCHAR} ||
+				'%'
+			</if>
+		</where>
+		)A
+		WHERE rownum &lt;= #{end,jdbcType=DECIMAL}
+		) B
+		WHERE r
+		&gt;#{start,jdbcType=DECIMAL} order by ROLE_ID asc
+	</select>
+	<select id="getTotal" resultType="INTEGER">
+		select
+		count(*)
+		from (select * from t_role
+		<where>
+			<if test="roleName!=null and roleName!=null != ''">
+				AND ROLE_NAME like '%' || #{roleName,jdbcType=VARCHAR} ||
+				'%'
+			</if>
+		</where>
+		)
+	</select>
+
+</mapper>

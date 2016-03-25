@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zy.role.dao.UserRoleMapper">
+	<resultMap id="BaseResultMap" type="com.zy.role.entities.UserRole">
+		<id column="ID" property="id" jdbcType="DECIMAL" />
+		<result column="ROLE_ID" property="roleId" jdbcType="DECIMAL" />
+		<result column="USER_ID" property="userId" jdbcType="DECIMAL" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		ID, ROLE_ID, USER_ID
+	</sql>
+	
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from T_USER_ROLE
+		where ID = #{id,jdbcType=DECIMAL}
+		
+	</select>
+	
+	<select id="selectByPrimaryUserid" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from T_USER_ROLE
+		where USER_ID = #{userId,jdbcType=DECIMAL}
+	</select>
+	<delete id="deleteByPrimaryKey">
+		delete from T_USER_ROLE
+		where ID = #{id,jdbcType=DECIMAL}
+	</delete>
+	<insert id="insert" parameterType="com.zy.role.entities.UserRole">
+		insert into T_USER_ROLE (ID, ROLE_ID, USER_ID
+		)
+		values (#{id,jdbcType=DECIMAL}, #{roleId,jdbcType=DECIMAL},
+		#{userId,jdbcType=DECIMAL}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.zy.role.entities.UserRole">
+		insert into T_USER_ROLE
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+				ID,
+			<if test="roleId != null">
+				ROLE_ID,
+			</if>
+			<if test="userId != null">
+				USER_ID,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+				USER_ROLE_SEQUENCE.NEXTVAL,
+			<if test="roleId != null">
+				#{roleId,jdbcType=DECIMAL},
+			</if>
+			<if test="userId != null">
+				#{userId,jdbcType=DECIMAL},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.zy.role.entities.UserRole">
+		update T_USER_ROLE
+		<set>
+			<if test="roleId != null">
+				ROLE_ID = #{roleId,jdbcType=DECIMAL},
+			</if>
+		</set>
+		where USER_ID = #{userId,jdbcType=DECIMAL}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.zy.role.entities.UserRole">
+		update T_USER_ROLE
+		set ROLE_ID = #{roleId,jdbcType=DECIMAL},
+		USER_ID = #{userId,jdbcType=DECIMAL}
+		where ID = #{id,jdbcType=DECIMAL}
+	</update>
+</mapper>

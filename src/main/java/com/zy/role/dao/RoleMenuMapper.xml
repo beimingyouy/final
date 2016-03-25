@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zy.role.dao.RoleMenuMapper">
+	<resultMap id="BaseResultMap" type="com.zy.role.entities.RoleMenu">
+		<id column="ID" property="id" jdbcType="DECIMAL" />
+		<result column="ROLE_ID" property="roleId" jdbcType="DECIMAL" />
+		<result column="MENU_ID" property="menuId" jdbcType="DECIMAL" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		ID, ROLE_ID, MENU_ID
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from T_ROLE_MENU
+		where ID = #{id,jdbcType=DECIMAL}
+	</select>
+	<select id="selectByRole" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from T_ROLE_MENU
+		where ROLE_ID= #{roleId,jdbcType=DECIMAL}
+	</select>
+
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from
+		T_ROLE_MENU
+		where ROLE_ID = #{roleId,jdbcType=DECIMAL}
+	</delete>
+	<insert id="insert" parameterType="com.zy.role.entities.RoleMenu">
+		insert into T_ROLE_MENU (ID,
+		ROLE_ID, MENU_ID
+		)
+		values (#{id,jdbcType=DECIMAL},
+		#{roleId,jdbcType=DECIMAL},
+		#{menuId,jdbcType=DECIMAL}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.zy.role.entities.RoleMenu">
+		insert into T_ROLE_MENU
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+
+			ID,
+
+			<if test="roleId != null">
+				ROLE_ID,
+			</if>
+			<if test="menuId != null">
+				MENU_ID,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			ROLE_MENU_SEQUENCE.NEXTVAL,
+			<if test="roleId != null">
+				#{roleId,jdbcType=DECIMAL},
+			</if>
+			<if test="menuId != null">
+				#{menuId,jdbcType=DECIMAL},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.zy.role.entities.RoleMenu">
+		update T_ROLE_MENU
+		<set>
+			<if test="roleId != null">
+				ROLE_ID = #{roleId,jdbcType=DECIMAL},
+			</if>
+			<if test="menuId != null">
+				MENU_ID = #{menuId,jdbcType=DECIMAL},
+			</if>
+		</set>
+		where ID = #{id,jdbcType=DECIMAL}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.zy.role.entities.RoleMenu">
+		update T_ROLE_MENU
+		set ROLE_ID = #{roleId,jdbcType=DECIMAL},
+		MENU_ID =
+		#{menuId,jdbcType=DECIMAL}
+		where ID = #{id,jdbcType=DECIMAL}
+	</update>
+</mapper>

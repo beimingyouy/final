@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zy.role.dao.MenuMapper">
+	<resultMap id="BaseResultMap" type="com.zy.role.entities.Menu">
+		<id column="MENU_ID" property="menuId" jdbcType="DECIMAL" />
+		<result column="MENU_NAME" property="menuName" jdbcType="VARCHAR" />
+		<result column="MENU_HREF" property="menuHref" jdbcType="VARCHAR" />
+		<result column="MENU_TARGET" property="menuTarget" jdbcType="VARCHAR" />
+		<result column="PARENTID" property="parentid" jdbcType="DECIMAL" />
+		<result column="GRADE" property="grade" jdbcType="DECIMAL" />
+		<result column="ISLEFT" property="isleft" jdbcType="DECIMAL" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		MENU_ID, MENU_NAME, MENU_HREF, MENU_TARGET, PARENTID,
+		GRADE, ISLEFT
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from T_MENU
+		where MENU_ID = #{menuId,jdbcType=DECIMAL}
+	</select>
+	<!--通过用户id 查询权限 -->
+	
+
+<!--通过username 查询权限 -->
+	<select id="selectByUserId" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from T_MENU WHERE MENU_ID IN(
+		select distinct MENU_ID from T_ROLE_MENU WHERE ROLE_ID IN(
+		SELECT ROLE_ID FROM T_USER_ROLE WHERE USER_ID=#{userId,jdbcType=DECIMAL}
+		)
+		) and PARENTID=0
+		ORDER BY MENU_ID asc
+	</select>
+
+	<select id="selectChirdren" resultMap="BaseResultMap" 
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from T_MENU WHERE MENU_ID IN(
+		select distinct MENU_ID from T_ROLE_MENU WHERE ROLE_ID IN(
+		SELECT ROLE_ID FROM T_USER_ROLE WHERE USER_ID =#{userId}
+		)
+		) and    MENU_ID like '%' ||#{menuId}|| '%' escape '\'
+		ORDER BY MENU_ID asc
+	</select>
+		<select id="queryAll" resultMap="BaseResultMap" 
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from T_MENU
+		ORDER BY MENU_ID asc
+	</select>
+
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from T_MENU
+		where MENU_ID = #{menuId,jdbcType=DECIMAL}
+	</delete>
+	<insert id="insert" parameterType="com.zy.role.entities.Menu">
+		insert into T_MENU (MENU_ID,
+		MENU_NAME, MENU_HREF,
+		MENU_TARGET, PARENTID, GRADE,
+		ISLEFT)
+		values
+		(#{menuId,jdbcType=DECIMAL}, #{menuName,jdbcType=VARCHAR},
+		#{menuHref,jdbcType=VARCHAR},
+		#{menuTarget,jdbcType=VARCHAR},
+		#{parentid,jdbcType=DECIMAL}, #{grade,jdbcType=DECIMAL},
+		#{isleft,jdbcType=DECIMAL})
+	</insert>
+	<insert id="insertSelective" parameterType="com.zy.role.entities.Menu">
+		insert into T_MENU
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="menuId != null">
+				MENU_ID,
+			</if>
+			<if test="menuName != null">
+				MENU_NAME,
+			</if>
+			<if test="menuHref != null">
+				MENU_HREF,
+			</if>
+			<if test="menuTarget != null">
+				MENU_TARGET,
+			</if>
+			<if test="parentid != null">
+				PARENTID,
+			</if>
+			<if test="grade != null">
+				GRADE,
+			</if>
+			<if test="isleft != null">
+				ISLEFT,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="menuId != null">
+				#{menuId,jdbcType=DECIMAL},
+			</if>
+			<if test="menuName != null">
+				#{menuName,jdbcType=VARCHAR},
+			</if>
+			<if test="menuHref != null">
+				#{menuHref,jdbcType=VARCHAR},
+			</if>
+			<if test="menuTarget != null">
+				#{menuTarget,jdbcType=VARCHAR},
+			</if>
+			<if test="parentid != null">
+				#{parentid,jdbcType=DECIMAL},
+			</if>
+			<if test="grade != null">
+				#{grade,jdbcType=DECIMAL},
+			</if>
+			<if test="isleft != null">
+				#{isleft,jdbcType=DECIMAL},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.zy.role.entities.Menu">
+		update T_MENU
+		<set>
+			<if test="menuName != null">
+				MENU_NAME = #{menuName,jdbcType=VARCHAR},
+			</if>
+			<if test="menuHref != null">
+				MENU_HREF = #{menuHref,jdbcType=VARCHAR},
+			</if>
+			<if test="menuTarget != null">
+				MENU_TARGET = #{menuTarget,jdbcType=VARCHAR},
+			</if>
+			<if test="parentid != null">
+				PARENTID = #{parentid,jdbcType=DECIMAL},
+			</if>
+			<if test="grade != null">
+				GRADE = #{grade,jdbcType=DECIMAL},
+			</if>
+			<if test="isleft != null">
+				ISLEFT = #{isleft,jdbcType=DECIMAL},
+			</if>
+		</set>
+		where MENU_ID = #{menuId,jdbcType=DECIMAL}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.zy.role.entities.Menu">
+		update T_MENU
+		set
+		MENU_NAME = #{menuName,jdbcType=VARCHAR},
+		MENU_HREF =
+		#{menuHref,jdbcType=VARCHAR},
+		MENU_TARGET =
+		#{menuTarget,jdbcType=VARCHAR},
+		PARENTID =
+		#{parentid,jdbcType=DECIMAL},
+		GRADE = #{grade,jdbcType=DECIMAL},
+		ISLEFT
+		= #{isleft,jdbcType=DECIMAL}
+		where MENU_ID = #{menuId,jdbcType=DECIMAL}
+	</update>
+</mapper>
