@@ -78,6 +78,8 @@ $(function(){
 
 				
 				}
+				alert(nodes2.length);
+				if(nodes2.length!=0){
 				for (var i = 0; i < nodes2.length; i++) {
 					var node = nodes2[i];
 					var text = node.text;
@@ -85,13 +87,16 @@ $(function(){
 					if (total_checked_id2 == "") {
 						total_checked_id2 = id;
 					} else {
-						total_checked_id2 = total_checked_id2 + "," + id;
-						
+						total_checked_id2 = total_checked_id2 + "," + id;						
 					}
 
 				}
 				all_checked = total_checked_id2+","+total_checked_id;
+		
+			}else{
+				all_checked = total_checked_id;
 				
+			}
 				var roleName = $("#roleName1").val();
 				var note = $("#note1").val();
 				var roleId = ${role.roleId};
@@ -102,14 +107,13 @@ $(function(){
 						"total_checked_id":	all_checked,
 				}
 				var savaURL = "<%=path%>/role/update.do";
-				$.post(savaURL,jsonData,function(json){
+				$.post(savaURL, jsonData, function(json) {
 					var flag = json.flag;
 					var msg = json.msg;
-					
+
 					if (flag == 'false') {
-						$.messager.alert("错误提示", "更新失败" , "error",
-								function() {
-								})
+						$.messager.alert("错误提示", "更新失败", "error", function() {
+						})
 					} else {
 						$.messager.alert("提示", "更新成功", "info", function() {
 						})
