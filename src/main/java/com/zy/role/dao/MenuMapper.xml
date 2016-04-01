@@ -22,9 +22,6 @@
 		where MENU_ID = #{menuId,jdbcType=DECIMAL}
 	</select>
 	<!--通过用户id 查询权限 -->
-	
-
-<!--通过username 查询权限 -->
 	<select id="selectByUserId" resultMap="BaseResultMap"
 		parameterType="java.lang.Long">
 		select
@@ -36,6 +33,7 @@
 		) and PARENTID=0
 		ORDER BY MENU_ID asc
 	</select>
+
 
 	<select id="selectChirdren" resultMap="BaseResultMap" 
 		parameterType="java.lang.Long">
@@ -60,6 +58,11 @@
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
 		delete from T_MENU
 		where MENU_ID = #{menuId,jdbcType=DECIMAL}
+	</delete>
+	
+	<delete id="deleteByParentId" parameterType="java.lang.Long">
+		delete from T_MENU
+		where PARENTID = #{id,jdbcType=DECIMAL}
 	</delete>
 	<insert id="insert" parameterType="com.zy.role.entities.Menu">
 		insert into T_MENU (MENU_ID,
@@ -130,15 +133,6 @@
 			</if>
 			<if test="menuHref != null">
 				MENU_HREF = #{menuHref,jdbcType=VARCHAR},
-			</if>
-			<if test="menuTarget != null">
-				MENU_TARGET = #{menuTarget,jdbcType=VARCHAR},
-			</if>
-			<if test="parentid != null">
-				PARENTID = #{parentid,jdbcType=DECIMAL},
-			</if>
-			<if test="grade != null">
-				GRADE = #{grade,jdbcType=DECIMAL},
 			</if>
 			<if test="isleft != null">
 				ISLEFT = #{isleft,jdbcType=DECIMAL},

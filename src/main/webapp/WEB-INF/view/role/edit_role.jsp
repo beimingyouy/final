@@ -5,8 +5,7 @@
 <html>
 <%
 	String path = request.getContextPath();
-	String basePath = request.getScheme() + "://"
-			+ request.getServerName() + ":" + request.getServerPort()
+	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 %>
 <head>
@@ -16,90 +15,112 @@
 </head>
 <body class="easyui-layout">
 	<div data-options="region:		'center'">
-		<form id = "form1">
-		<table>
-			<tr>
-				<td align="right">角色名称:</td>
-				<td><input class="easyui-validatebox" type="text" name="roleName" id = "roleName1"
-					value = "${role.roleName}"
-					data-options="required:true,missingMessage:'请输入角色名！'" /></td>
-			</tr>
-			<tr style="height: 40px">
-				<td align="right">角色备注:</td>
-				<td><input class="easyui-validatebox" type="text" name="note" id = "note1"
-				value = "${role.note}"/></td>
-			</tr>
-			<tr style="height: 40px">
-				<td align="right">角色权限:</td>
-				<td>
-				<div id="menu_div" style="heigth:500px ;float: right; "></div>
-				</td>
-			</tr>
-		</table>
+		<form id="form1">
+			<table>
+				<tr>
+					<td align="right">角色名称:</td>
+					<td><input class="easyui-validatebox" type="text"
+						name="roleName" id="roleName1" value="${role.roleName}"
+						data-options="required:true,missingMessage:'请输入角色名！'" /></td>
+				</tr>
+				<tr style="height: 40px">
+					<td align="right">角色备注:</td>
+					<td><input class="easyui-validatebox" type="text" name="note"
+						id="note1" value="${role.note}" /></td>
+				</tr>
+				<tr style="height: 40px">
+					<td align="left" valign="top">角色权限:</td>
+					<td>
+						<div id="menu_div" style="heigth: 500px; float: left;"></div>
+					</td>
+				</tr>
+			</table>
 		</form>
 	</div>
-	<div data-options="region:		'south'" 
+	<div data-options="region:		'south'"
 		style="height: 40px text-align: right;">
-		<br/>
-		<a id="sava_btn" href="javascript:void(0)" onclick="savadata()"	class="easyui-linkbutton"
+		<br /> <a id="sava_btn" href="javascript:void(0)"
+			onclick="savadata()" class="easyui-linkbutton"
 			data-options="iconCls:'icon-save'">保存数据</a>
 
 	</div>
-<script>
+	<script>
 $(function(){
 	$("#menu_div").tree({
-		url:				"<%=path%>/role/loadMenuTree.do?roleId=${role.roleId}",
-		method:				"get",
-		checkbox:			true,
-		lines:				true		
-	})
-})
+		url:"<%=path%>/role/loadMenuTree.do?roleId=${role.roleId}",
+				method : "get",
+				checkbox : true,
+				lines : true
+			})
+		})
 
- function savadata(){
-	var sava_btn = document.getElementById("sava_btn")
-	var nodes = $("#menu_div").tree("getChecked",["checked","inderteminate"]);
-	if(nodes==null||nodes.length==0){
-		$.messager.alert("提示","权限还未选择，无法进行保存操作","warning")
-	}else{		
-		var total_checked_id="";		
-		for(var i=0;i<nodes.length;i++){
-			var  node = 	nodes[i];
-			var id = 		node.id;
-			var text = 		node.text;
-			if(total_checked_id==""){
-				total_checked_id=id;
-			}else{
-				total_checked_id = total_checked_id+","+id;
-			}
-		}
-		var roleName = $("#roleName1").val();
-		var note = $("#note1").val();
-		var roleId = ${role.roleId};
-		var jsonData = {
-				"roleId":			roleId,
-				"roleName":			roleName,
-				"note":				note,
-				"total_checked_id":	total_checked_id,
-		}
-		var savaURL = "<%=path%>/role/update.do";
-		$.post(savaURL,jsonData,function(json){
-			var flag = json.flag;
-			var msg = json.msg;
-			
-			if (flag == 'false') {
-				$.messager.alert("错误提示", "更新失败" , "error",
-						function() {
-						})
+		function savadata() {
+			var sava_btn = document.getElementById("sava_btn")
+
+			var nodes = $("#menu_div").tree("getChecked",
+					[ "checked", "inderteminate" ]);
+			var nodes2 = $('#menu_div').tree('getChecked', 'indeterminate');
+			if (nodes == null || nodes.length == 0) {
+				$.messager.alert("提示", "权限还未选择，无法进行保存操作", "warning")
 			} else {
-				$.messager.alert("提示", "更新成功", "info", function() {
-				})
-				win_update.dialog("destroy");
-				$("#demo_datagrid").datagrid("reload");
+				var total_checked_id = "";
+				var total_checked_id2 = "";
+				for (var i = 0; i < nodes.length; i++) {
+					var node = nodes[i];
+					var id = node.id;
+					var text = node.text;
+					if (total_checked_id == "") {
+						total_checked_id = id;
+					} else {
+						total_checked_id = total_checked_id + "," + id;
+						
+					}
+
+				
+				}
+				for (var i = 0; i < nodes2.length; i++) {
+					var node = nodes2[i];
+					var text = node.text;
+					var id = node.id;
+					if (total_checked_id2 == "") {
+						total_checked_id2 = id;
+					} else {
+						total_checked_id2 = total_checked_id2 + "," + id;
+						
+					}
+
+				}
+				all_checked = total_checked_id2+","+total_checked_id;
+				
+				var roleName = $("#roleName1").val();
+				var note = $("#note1").val();
+				var roleId = ${role.roleId};
+				var jsonData = {
+						"roleId":			roleId,
+						"roleName":			roleName,
+						"note":				note,
+						"total_checked_id":	all_checked,
+				}
+				var savaURL = "<%=path%>/role/update.do";
+				$.post(savaURL,jsonData,function(json){
+					var flag = json.flag;
+					var msg = json.msg;
+					
+					if (flag == 'false') {
+						$.messager.alert("错误提示", "更新失败" , "error",
+								function() {
+								})
+					} else {
+						$.messager.alert("提示", "更新成功", "info", function() {
+						})
+						win_update.dialog("destroy");
+						$("#demo_datagrid").datagrid("reload");
+					}
+				}, "json");
+
 			}
-		}, "json");
-	}
-} 
-</script>
+		}
+	</script>
 
 </body>
 </html>

@@ -29,9 +29,9 @@
 				<td><input class="easyui-validatebox" type="text" name="note" id = "note1"/></td>
 			</tr>
 			<tr style="height: 40px">
-				<td align="right">角色权限:</td>
-				<td>
-				<div id="menu_div" style="heigth:500px ;float: right; "></div>
+				<td align="right" valign="top">角色权限:</td>
+				<td align="left">
+				<div id="menu_div" style="heigth:500px ;float: left; "></div>
 				</td>
 			</tr>
 		</table>

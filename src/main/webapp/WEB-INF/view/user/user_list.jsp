@@ -27,7 +27,7 @@
 		var win;
 		var toolbar =  new Array();
 		$(function(){
-			var toolbar = [
+			 toolbar = [
 		              {id:"add", 		text:"添加用户",		iconCls:'icon-add',
 		          	   handler: 		function(){
 		          		   					user_add();
@@ -52,23 +52,22 @@
 	                ];
 			//定义列表
 			$('#demo_datagrid').datagrid({
-				url:'<%=path%>/user/list',
+				url:'<%=path%>/user/list.do',
 			fit : true,
 			fitColumns : false,
-			singleSelect : true,
+			singleSelect : false,
 			rownumbers : true,
 			pagination : true,
 			border : false,
 			autoRowHeight : true,
 			toolbar : toolbar,
-			columns : [ [ 
-			{
+			frozenColumns : [ [ {
 				field : 'userid',
 				title : 'userid',
 				align : 'center',
 				width : 80
-			},
-			{
+			} ] ],
+			columns : [ [ {
 				field : 'username',
 				title : '用户名',
 				align : 'center',
@@ -115,12 +114,12 @@
 	//添加
 	function user_add(){
 		
-		win = $('<div/>').dialog({
+		win_add = $('<div/>').dialog({
 			title:'添加',
 			width:600,
 			height:400,
 			modal:true,
-			href:'<%=path%>/user/toAdd',
+			href:'<%=path%>/user/toAdd.do',
 			onClose:function(){
 				demo_window_close();
 			}
@@ -128,6 +127,13 @@
 	}
 	//提交添加
 	function add_demo_submit(){
+		 var isValid = $('#demo_add_form').form('validate'); 
+	       if(!isValid){
+	    	   $.messager.alert("错误提示", "您有必填内容为填写" , "error",
+						function() {
+				})
+	           return ;
+	       }
 		var formdate = $('#demo_add_form').serializeArray();
 		var url = '<%=path%>/user/submit.do';
 			$.post(url, formdate, function(json) {				
@@ -139,9 +145,13 @@
 							function() {
 							})
 				} else {
-					$.messager.alert("提示", "添加成功", "info", function() {
+					/* $.messager.alert("提示", "添加成功", "info", function() {
+					}) */
+					$.messager.show({
+						title:"提示",
+						msg:"添加成功"
 					})
-					win.dialog("destroy");
+					win_add.dialog("destroy");
 					$("#demo_datagrid").datagrid("reload");
 				}
 			}, "json");
@@ -162,14 +172,22 @@
 			width:600,
 			height:400,
 			modal:true,
-			href:'<%=path%>/user/toUpdate.do?username='+row[0].username,
+			href:'<%=path%>/user/toUpdate.do?userid='+row[0].userid,
 			onClose:function(){
-				win_update.dialog('destroy');
+				demo_window_close();
 			}
 		});
 	}
 	//提交修改
 	function update_demo_submit(){
+		
+		 var isValid = $('#demo_update_form').form('validate'); 
+	       if(!isValid){
+	    	   $.messager.alert("错误提示", "您有必填内容为填写" , "error",
+						function() {
+				})
+	           return ;
+	       }
 		var formdate = $("#demo_update_form").serializeArray();
 		var url = "<%=path%>/user/update.do";
 		$.post(url,formdate,function(json){
@@ -234,7 +252,7 @@
 
 	//重置
 	function demoReset() {
-		//$('#demo_Senior_form').form('reset');
+		$('#demo_Senior_form').form('reset');
 		$('#demo_list_form').form('reset');
 		$('#demo_datagrid').datagrid('load', 
 				{username:$('#username').val(),sex:$("#sex1").combobox('getValue')});
@@ -275,9 +293,9 @@
 		
 </script>
 </head>
-<body >
+<body>
 	<div class="easyui-layout" data-options="fit:true,border:false">
-		<div data-options="region:'north',border:false " 
+		<div data-options="region:'north',border:false"
 			style="overflow: hidden; padding: 5px">
 			<form id="demo_list_form" method="post">
 				<table cellpadding="0" cellspacing="1" class="formtable">

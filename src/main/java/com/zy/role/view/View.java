@@ -7,5 +7,14 @@ public interface View {
 		public static String EDIT_ROLE = "WEB-INF/view/role/edit_role";
 
 	}
+	public  interface menu{
+		public static String MENU_LIST = "WEB-INF/view/menu/menu_list";
+		public static String MENU_ADD_CHILD = "WEB-INF/view/menu/menu_add_child";
+		public static String MENU_ADD_PARENT = "WEB-INF/view/menu/menu_add_parent";
+		public static String MENU_UPDATE = "WEB-INF/view/menu/menu_update";
+		public static String MENU_VIEW = "WEB-INF/view/menu/menu_view";
+		
+
+	}
 
 }

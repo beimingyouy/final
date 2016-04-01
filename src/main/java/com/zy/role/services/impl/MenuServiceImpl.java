@@ -61,17 +61,13 @@ public class MenuServiceImpl implements MenuService {
 				
 				Map<String, Object> parentNode = id_nodeMap.get(parentId+"");
 				if (parentNode != null) {
-					
 					List<Map<String, Object>> childrenList = null;
-					if (parentNode.get("children") == null)
-					{
+					if (parentNode.get("children") == null) {
 						childrenList = new ArrayList<Map<String, Object>>();
-					} 
-					else {
+					} else {
 						childrenList = (List<Map<String, Object>>) parentNode
 								.get("children");
 					}
-					
 					childrenList.add(treeNode);
 					parentNode.put("children", childrenList);
 				}
@@ -79,6 +75,78 @@ public class MenuServiceImpl implements MenuService {
 
 		}
 		return listTree;
+	}
+
+	public Menu selectByPrimaryKey(Long id) {
+		
+		return menuMaper.selectByPrimaryKey(id);
+	}
+
+	public List<Map<String, Object>> getMenuTree() {
+		
+		// 最大节
+		List<Map<String, Object>> listTree = new ArrayList<Map<String, Object>>();
+		// 树节点
+		Map<String, Object> treeNode = null;
+		// 叶子节点
+		Map<String, Map<String, Object>> id_nodeMap = new LinkedHashMap<String, Map<String, Object>>();
+
+		List<Menu> menuList = menuMaper.queryAll();
+
+		for (Menu menu : menuList) {
+			Long menuId = menu.getMenuId();
+			String menuName = menu.getMenuName();
+			Long parentId = menu.getParentid();
+			treeNode = new LinkedHashMap<String, Object>();
+			treeNode.put("id", menuId);
+			treeNode.put("menuName", menu.getMenuName());
+			treeNode.put("menuHref", menu.getMenuHref());
+			treeNode.put("parentid", menu.getParentid());
+			treeNode.put("isleft", menu.getIsleft());
+			treeNode.put("grade", menu.getGrade());	
+			id_nodeMap.put(menuId + "", treeNode);
+			if ("0".equals(parentId + "")) {
+				listTree.add(treeNode);
+			} else {
+				/**
+				 * 节点要挂到对应的父节点上
+				 */
+
+				Map<String, Object> parentNode = id_nodeMap.get(parentId + "");
+				parentNode.put("state", "closed");
+				List<Map<String, Object>> children = null;
+				if (parentNode.get("children") == null) {
+					children = new ArrayList<Map<String, Object>>();
+				} else {
+					children = (List<Map<String, Object>>) parentNode
+							.get("children");
+				}
+				children.add(treeNode);
+				parentNode.put("children", children);
+			}
+		}
+
+		
+		return listTree;
+	}
+
+	public int insert(Menu menu) {
+		
+		return menuMaper.insertSelective(menu);
+	}
+
+	public void delete(Long menuId) {
+		menuMaper.deleteByPrimaryKey(menuId);		
+	}
+
+	public void deleteByParentId(Long id) {
+		menuMaper.deleteByParentId(id);
+		
+	}
+
+	public int update(Menu menu) {
+		
+		return menuMaper.updateByPrimaryKeySelective(menu);
 	}
 
 }

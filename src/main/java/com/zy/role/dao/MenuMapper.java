@@ -10,8 +10,10 @@ import com.zy.role.entities.Menu;
 
 public interface MenuMapper {
     int deleteByPrimaryKey(Long menuId);
-
-    int insert(Menu record);
+    
+	int deleteByParentId(Long id);
+    
+	int insert(Menu record);
 
     int insertSelective(Menu record);
 
@@ -22,10 +24,12 @@ public interface MenuMapper {
     int updateByPrimaryKey(Menu record);
     
     List<Menu> selectByUserId(Long userId);
-    
+
 	List<Menu> selectChirdren(@Param("userId") Long userId,@Param("menuId") Long menuId);
 
 	List<Menu> queryAll();
+
+
     
 
 }
