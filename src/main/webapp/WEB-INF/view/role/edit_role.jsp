@@ -78,7 +78,7 @@ $(function(){
 
 				
 				}
-				alert(nodes2.length);
+
 				if(nodes2.length!=0){
 				for (var i = 0; i < nodes2.length; i++) {
 					var node = nodes2[i];

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zy.notice.dao.NoticeMapper">
+	<resultMap id="BaseResultMap" type="com.zy.notice.entity.Notice">
+		<result column="NOTICE_ID" property="id" jdbcType="DECIMAL" />
+		<result column="NOTICE_TITLE" property="notice_title" jdbcType="VARCHAR" />
+		<result column="NOTICE_CONTENT" property="notice_content" jdbcType="VARCHAR" />
+		<result column="FILENAME" property="fileName" jdbcType="VARCHAR" />
+		<result column="CREATE_DATE" property="create_date" jdbcType="TIMESTAMP" />
+		<result column="END_DATE" property="end_date" jdbcType="TIMESTAMP" />
+		<result column="IS_INVALID" property="is_invalid" jdbcType="DECIMAL" />
+		<result column="CREATE_USER" property="create_user" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<insert id="insertSelective" parameterType="com.zy.notice.entity.Notice">
+		insert into T_NOTICE
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			NOTICE_ID,
+			<if test="notice_title != null">
+				NOTICE_TITLE,
+			</if>
+			<if test="notice_content != null">
+				NOTICE_CONTENT,
+			</if>
+			<if test="fileName != null">
+				FILENAME,
+			</if>
+			CREATE_DATE,
+			<if test="end_date != null">
+				END_DATE,
+			</if>
+			<if test="create_user != null">
+				CREATE_USER,
+			</if>
+			<if test="is_invalid != null">
+				IS_INVALID,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			NOTICE_SEQUENCE.NEXTVAL,
+			<if test="notice_title != null">
+				#{notice_title,jdbcType=VARCHAR},
+			</if>
+			<if test="notice_content != null">
+				#{notice_content,jdbcType=VARCHAR},
+			</if>
+			<if test="fileName != null">
+				#{fileName,jdbcType=VARCHAR},
+			</if>
+			sysdate,
+			<if test="end_date != null">
+				#{end_date,jdbcType=TIMESTAMP},
+			</if>
+			<if test="create_user != null">
+				#{create_user,jdbcType=VARCHAR},
+			</if>
+			<if test="is_invalid != null">
+				#{is_invalid,jdbcType=DECIMAL},
+			</if>
+		</trim>
+	</insert>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select
+		*
+		from T_NOTICE
+		where NOTICE_ID =
+		#{id,jdbcType=DECIMAL}
+	</select>
+
+	<select id="getTotal" resultType="INTEGER">
+		select
+		count(*)
+		from
+		(select * from T_NOTICE
+		<where>
+			<if test="notice_title!=null and notice_title != ''">
+				AND NOTICE_TITLE like '%' ||#{notice_title,jdbcType=VARCHAR}||'%'
+			</if>
+		</where>
+		)
+	</select>
+	<select id="queryAll" resultMap="BaseResultMap">
+		SELECT * FROM
+		(
+		SELECT A.*, rownum r
+		FROM
+		(select * from T_NOTICE
+		<where>
+			<if test="notice_title!=null and notice_title != ''">
+				AND NOTICE_TITLE like '%' ||#{notice_title,jdbcType=VARCHAR}||'%'
+			</if>
+		</where>
+		)A
+		WHERE rownum &lt;= #{end,jdbcType=DECIMAL}
+		) B
+		WHERE r
+		&gt;#{start,jdbcType=DECIMAL} order by CREATE_DATE asc
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from
+		T_NOTICE
+		where NOTICE_ID = #{id,jdbcType=DECIMAL}
+	</delete>
+</mapper>

@@ -84,10 +84,7 @@
 		var a = $("#menuId").val();
 		var b = $("#menuName").val();
 		var c = $("#isleft").val();
-		alert(a);
-		alert(b);
-		alert(c);
-		
+
 		 var isValid = $('#demo_add_form').form('validate'); 
 	       if(isValid==false){
 	    	   $.messager.alert("错误提示", "您有必填内容为填写" , "error",
