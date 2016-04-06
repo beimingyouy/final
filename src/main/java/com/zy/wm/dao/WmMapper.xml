@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zy.wm.dao.WmMapper" >
+  <resultMap id="BaseResultMap" type="com.zy.wm.entities.Wm" >
+    <id column="wm_id" property="wmId" jdbcType="DECIMAL" />
+    <result column="wm_name" property="wmName" jdbcType="VARCHAR" />
+    <result column="wm_count" property="wmCount" jdbcType="DECIMAL" />
+    <result column="wm_all" property="wmAll" jdbcType="DECIMAL" />
+    <result column="id" property="id" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    wm_id, wm_name, wm_count, wm_all, id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_WM
+    where wm_id = #{wmId,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from T_WM
+    where wm_id = #{wmId,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.zy.wm.entities.Wm" >
+    insert into T_WM (wm_id, wm_name, wm_count, 
+      wm_all, id)
+    values (#{wmId,jdbcType=DECIMAL}, #{wmName,jdbcType=VARCHAR}, #{wmCount,jdbcType=DECIMAL}, 
+      #{wmAll,jdbcType=DECIMAL}, #{id,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zy.wm.entities.Wm" >
+    insert into T_WM
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="wmId != null" >
+        wm_id,
+      </if>
+      <if test="wmName != null" >
+        wm_name,
+      </if>
+      <if test="wmCount != null" >
+        wm_count,
+      </if>
+      <if test="wmAll != null" >
+        wm_all,
+      </if>
+      <if test="id != null" >
+        id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="wmId != null" >
+        #{wmId,jdbcType=DECIMAL},
+      </if>
+      <if test="wmName != null" >
+        #{wmName,jdbcType=VARCHAR},
+      </if>
+      <if test="wmCount != null" >
+        #{wmCount,jdbcType=DECIMAL},
+      </if>
+      <if test="wmAll != null" >
+        #{wmAll,jdbcType=DECIMAL},
+      </if>
+      <if test="id != null" >
+        #{id,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zy.wm.entities.Wm" >
+    update T_WM
+    <set >
+      <if test="wmName != null" >
+        wm_name = #{wmName,jdbcType=VARCHAR},
+      </if>
+      <if test="wmCount != null" >
+        wm_count = #{wmCount,jdbcType=DECIMAL},
+      </if>
+      <if test="wmAll != null" >
+        wm_all = #{wmAll,jdbcType=DECIMAL},
+      </if>
+      <if test="id != null" >
+        id = #{id,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where wm_id = #{wmId,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zy.wm.entities.Wm" >
+    update T_WM
+    set wm_name = #{wmName,jdbcType=VARCHAR},
+      wm_count = #{wmCount,jdbcType=DECIMAL},
+      wm_all = #{wmAll,jdbcType=DECIMAL},
+      id = #{id,jdbcType=DECIMAL}
+    where wm_id = #{wmId,jdbcType=DECIMAL}
+  </update>
+</mapper>
