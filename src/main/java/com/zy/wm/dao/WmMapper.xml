@@ -2,34 +2,37 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.zy.wm.dao.WmMapper" >
   <resultMap id="BaseResultMap" type="com.zy.wm.entities.Wm" >
-    <id column="wm_id" property="wmId" jdbcType="DECIMAL" />
+    <id column="id" property="id" jdbcType="DECIMAL" />
+    <result column="wm_id" property="wmId" jdbcType="VARCHAR" />
     <result column="wm_name" property="wmName" jdbcType="VARCHAR" />
     <result column="wm_count" property="wmCount" jdbcType="DECIMAL" />
     <result column="wm_all" property="wmAll" jdbcType="DECIMAL" />
-    <result column="id" property="id" jdbcType="DECIMAL" />
   </resultMap>
   <sql id="Base_Column_List" >
-    wm_id, wm_name, wm_count, wm_all, id
+    id, wm_id, wm_name, wm_count, wm_all
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
     from T_WM
-    where wm_id = #{wmId,jdbcType=DECIMAL}
+    where id = #{id,jdbcType=DECIMAL}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from T_WM
-    where wm_id = #{wmId,jdbcType=DECIMAL}
+    where id = #{id,jdbcType=DECIMAL}
   </delete>
   <insert id="insert" parameterType="com.zy.wm.entities.Wm" >
-    insert into T_WM (wm_id, wm_name, wm_count, 
-      wm_all, id)
-    values (#{wmId,jdbcType=DECIMAL}, #{wmName,jdbcType=VARCHAR}, #{wmCount,jdbcType=DECIMAL}, 
-      #{wmAll,jdbcType=DECIMAL}, #{id,jdbcType=DECIMAL})
+    insert into T_WM (id, wm_id, wm_name, 
+      wm_count, wm_all)
+    values (#{id,jdbcType=DECIMAL}, #{wmId,jdbcType=VARCHAR}, #{wmName,jdbcType=VARCHAR}, 
+      #{wmCount,jdbcType=DECIMAL}, #{wmAll,jdbcType=DECIMAL})
   </insert>
   <insert id="insertSelective" parameterType="com.zy.wm.entities.Wm" >
     insert into T_WM
     <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
       <if test="wmId != null" >
         wm_id,
       </if>
@@ -42,13 +45,13 @@
       <if test="wmAll != null" >
         wm_all,
       </if>
-      <if test="id != null" >
-        id,
-      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=DECIMAL},
+      </if>
       <if test="wmId != null" >
-        #{wmId,jdbcType=DECIMAL},
+        #{wmId,jdbcType=VARCHAR},
       </if>
       <if test="wmName != null" >
         #{wmName,jdbcType=VARCHAR},
@@ -59,14 +62,14 @@
       <if test="wmAll != null" >
         #{wmAll,jdbcType=DECIMAL},
       </if>
-      <if test="id != null" >
-        #{id,jdbcType=DECIMAL},
-      </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.zy.wm.entities.Wm" >
     update T_WM
     <set >
+      <if test="wmId != null" >
+        wm_id = #{wmId,jdbcType=VARCHAR},
+      </if>
       <if test="wmName != null" >
         wm_name = #{wmName,jdbcType=VARCHAR},
       </if>
@@ -76,18 +79,48 @@
       <if test="wmAll != null" >
         wm_all = #{wmAll,jdbcType=DECIMAL},
       </if>
-      <if test="id != null" >
-        id = #{id,jdbcType=DECIMAL},
-      </if>
     </set>
-    where wm_id = #{wmId,jdbcType=DECIMAL}
+    where id = #{id,jdbcType=DECIMAL}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.zy.wm.entities.Wm" >
     update T_WM
-    set wm_name = #{wmName,jdbcType=VARCHAR},
+    set wm_id = #{wmId,jdbcType=VARCHAR},
+      wm_name = #{wmName,jdbcType=VARCHAR},
       wm_count = #{wmCount,jdbcType=DECIMAL},
-      wm_all = #{wmAll,jdbcType=DECIMAL},
-      id = #{id,jdbcType=DECIMAL}
-    where wm_id = #{wmId,jdbcType=DECIMAL}
+      wm_all = #{wmAll,jdbcType=DECIMAL}
+    where id = #{id,jdbcType=DECIMAL}
   </update>
+  
+  
+  <select id="getTotal" resultType="INTEGER">
+		select
+		count(*)
+		from (
+		select * from t_wm
+		<where>
+			<if test="wmId!=null and wmId != ''">
+				AND WM_ID like '%' || #{wmId,jdbcType=VARCHAR} || '%'
+			</if>
+			
+		</where>
+		)
+	</select>
+	<select id="queryAll" resultMap="BaseResultMap">
+		SELECT * FROM
+		(
+		SELECT A.*, rownum r
+		FROM
+		(select * from t_wm
+		<where>
+			<if test="wmId!=null and wmId != ''">
+				AND WM_ID like '%' || #{wmId,jdbcType=VARCHAR} || '%'
+			</if>
+
+		</where>
+		)A
+		WHERE rownum &lt;= #{end,jdbcType=DECIMAL}
+		) B
+		WHERE r &gt;#{start,jdbcType=DECIMAL} order by id asc
+	</select>
+  
 </mapper>

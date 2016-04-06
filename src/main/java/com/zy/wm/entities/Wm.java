@@ -1,7 +1,9 @@
 package com.zy.wm.entities;
 
 public class Wm {
-    private Long wmId;
+    private Long id;
+
+    private String wmId;
 
     private String wmName;
 
@@ -9,14 +11,20 @@ public class Wm {
 
     private Long wmAll;
 
-    private Long id;
+    public Long getId() {
+        return id;
+    }
 
-    public Long getWmId() {
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getWmId() {
         return wmId;
     }
 
-    public void setWmId(Long wmId) {
-        this.wmId = wmId;
+    public void setWmId(String wmId) {
+        this.wmId = wmId == null ? null : wmId.trim();
     }
 
     public String getWmName() {
@@ -41,13 +49,5 @@ public class Wm {
 
     public void setWmAll(Long wmAll) {
         this.wmAll = wmAll;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 }
