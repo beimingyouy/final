@@ -120,7 +120,7 @@
 		)A
 		WHERE rownum &lt;= #{end,jdbcType=DECIMAL}
 		) B
-		WHERE r &gt;#{start,jdbcType=DECIMAL} order by id asc
+		WHERE r &gt;#{start,jdbcType=DECIMAL} order by b."wm_id"
 	</select>
   
 </mapper>
