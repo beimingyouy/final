@@ -96,7 +96,7 @@
 				width : 600,
 				height : 400,
 				modal : true,
-				href : '<%=path%>/demo/view.do?id=' + id,
+				href : '<%=path%>/wm/view.do?id=' + id,
 			onClose : function() {
 				demo_window_close();
 			}

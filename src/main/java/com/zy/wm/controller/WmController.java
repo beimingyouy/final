@@ -71,9 +71,9 @@ public class WmController {
 	}
 
 	@RequestMapping(value = "/view", method = RequestMethod.GET)
-	public String view(Model model, String username) {
-		User user = userService.selectByPrimaryKey(username);
-		model.addAttribute("user", user);
+	public String view(Model model, Long id) {
+		Wm wm = wmService.selectByPrimaryKey(id) ;
+		model.addAttribute("user", wm);
 		return View.wm.WM_ADD;
 	}
 

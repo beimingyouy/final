@@ -6,7 +6,7 @@ import com.zy.wm.entities.Wm;
 
 public interface WmService {
 
-	public Wm selectByPrimaryKey(String Wmname);
+	public Wm selectByPrimaryKey(Long id);
 
 	public Map<String, Object> queryAll(int rows,int page,Wm Wm);
 

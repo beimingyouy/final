@@ -39,9 +39,9 @@ public class WmServiceImpl implements WmService {
 		return WmMapper.deleteByPrimaryKey(id);
 	}
 	@Override
-	public Wm selectByPrimaryKey(String Wmname) {
-		// TODO Auto-generated method stub
-		return null;
+	public Wm selectByPrimaryKey(Long id) {
+		
+		return WmMapper.selectByPrimaryKey(id);
 	}
 
 }
