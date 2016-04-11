@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zy.position.dao.PositionMapper" >
+  <resultMap id="BaseResultMap" type="com.zy.position.entities.Position" >
+    <id column="id" property="id" jdbcType="DECIMAL" />
+    <result column="p_id" property="pId" jdbcType="DECIMAL" />
+    <result column="p_count" property="pCount" jdbcType="DECIMAL" />
+    <result column="p_all" property="pAll" jdbcType="DECIMAL" />
+    <result column="p_name" property="pName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, p_id, p_count, p_all, p_name
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_POSITION
+    where id = #{id,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from T_POSITION
+    where id = #{id,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.zy.position.entities.Position" >
+    insert into T_POSITION (id, p_id, p_count, 
+      p_all, p_name)
+    values (#{id,jdbcType=DECIMAL}, #{pId,jdbcType=DECIMAL}, #{pCount,jdbcType=DECIMAL}, 
+      #{pAll,jdbcType=DECIMAL}, #{pName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zy.position.entities.Position" >
+    insert into T_POSITION
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="pId != null" >
+        p_id,
+      </if>
+      <if test="pCount != null" >
+        p_count,
+      </if>
+      <if test="pAll != null" >
+        p_all,
+      </if>
+      <if test="pName != null" >
+        p_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="pId != null" >
+        #{pId,jdbcType=DECIMAL},
+      </if>
+      <if test="pCount != null" >
+        #{pCount,jdbcType=DECIMAL},
+      </if>
+      <if test="pAll != null" >
+        #{pAll,jdbcType=DECIMAL},
+      </if>
+      <if test="pName != null" >
+        #{pName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zy.position.entities.Position" >
+    update T_POSITION
+    <set >
+      <if test="pId != null" >
+        p_id = #{pId,jdbcType=DECIMAL},
+      </if>
+      <if test="pCount != null" >
+        p_count = #{pCount,jdbcType=DECIMAL},
+      </if>
+      <if test="pAll != null" >
+        p_all = #{pAll,jdbcType=DECIMAL},
+      </if>
+      <if test="pName != null" >
+        p_name = #{pName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zy.position.entities.Position" >
+    update T_POSITION
+    set p_id = #{pId,jdbcType=DECIMAL},
+      p_count = #{pCount,jdbcType=DECIMAL},
+      p_all = #{pAll,jdbcType=DECIMAL},
+      p_name = #{pName,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=DECIMAL}
+  </update>
+</mapper>

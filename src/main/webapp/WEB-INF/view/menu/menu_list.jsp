@@ -104,7 +104,7 @@
 		
 		//添加父级菜单
 		function add_parent(){
-			  win_add = $('<div/>').dialog({
+			  win = $('<div/>').dialog({
 				title : '添加根级菜单',
 				width : 600,
 				height : 400,
@@ -142,7 +142,7 @@
 				$.messager.alert('提示框', '请选择一行数据！');
 				return ;
 			}
-			 win_update = $('<div/>').dialog({
+			 win= $('<div/>').dialog({
 				title:'编辑',
 				width:600,
 				height:400,

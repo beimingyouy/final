@@ -28,15 +28,15 @@
 		var toolbar =  new Array();
 		$(function(){
 			var toolbar = [
-		              {id:"add", 		text:"添加用户",		iconCls:'icon-add',
+		              {id:"add", 		text:"添加仓储资源",		iconCls:'icon-add',
 		          	   handler: 		function(){
 		          		   					demo_add();
 		          		   				}},
-		          	  {id:"edit", 		text:"编辑用户",		iconCls:'icon-edit',
+		          	  {id:"edit", 		text:"编辑仓储资源",		iconCls:'icon-edit',
 			           handler: 		function(){
 			        	   					demo_edit();
 			        	   				}},
-			          {id:"delete", 	text:"删除用户",		iconCls:'icon-remove',
+			          {id:"delete", 	text:"删除仓储",		iconCls:'icon-remove',
 				       handler: 		function(){
 				    	  					demo_delete();
 				    	   				}},
@@ -106,7 +106,7 @@
 	//添加
 	function demo_add(){
 		
-		win_add = $('<div/>').dialog({
+		win= $('<div/>').dialog({
 			title:'添加',
 			width:600,
 			height:400,
@@ -116,44 +116,21 @@
 				demo_window_close();
 			}
 		});
-	}
-	//提交添加
-	function add_demo_submit(){
-		var formdate = $('#demo_add_form').serializeArray();
-		var url = '<%=path%>/demo/submit.do';
-			$.post(url, formdate, function(json) {				
-				var flag = json.flag;
-				var msg = json.msg;
-				
-				if (flag == 'false') {
-					$.messager.alert("错误提示", "添加失败， 原因是" + msg, "error",
-							function() {
-							})
-				} else {
-					$.messager.alert("提示", "添加成功", "info", function() {
-					})
-					win_add.dialog("destroy");
-					$("#demo_datagrid").datagrid("reload");
-				}
-			}, "json");
-
-		}
-	
-	
+	}	
 	//修改
 
 	function demo_edit(id) {
 		var row = $('#demo_datagrid').datagrid('getChecked');
-		if (row == '') {
+		if (row == ''||row.length!=1) {
 			$.messager.alert('提示框', '请选择一行数据！');
 			return false;
 		}
-		win_update = $('<div/>').dialog({
+		win= $('<div/>').dialog({
 			title:'编辑',
 			width:600,
 			height:400,
 			modal:true,
-			href:'<%=path%>/demo/toUpdate.do?id='+row[0].id,
+			href:'<%=path%>/wm/toUpdate?id='+row[0].id,
 			onClose:function(){
 				demo_window_close();
 			}
@@ -162,7 +139,7 @@
 	//提交修改
 	function update_demo_submit(){
 		var formdate = $("#demo_update_form").serializeArray();
-		var url = "<%=path%>/demo/update.do";
+		var url = "<%=path%>/wm/update";
 		$.post(url,formdate,function(json){
 			var flag = json.flag;
 			var msg = json.msg;
@@ -196,7 +173,7 @@
 			}
 		}
 	
-		var url = '<%=path%>/demo/toDelete.do?ids='+ids;
+		var url = '<%=path%>/wm/toDelete?ids='+ids;
 		$.messager.confirm('确认', '您是否要删除？', function(r) {
 			if (r) {
 			$.post(url,ids,function(json){

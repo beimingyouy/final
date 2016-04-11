@@ -30,9 +30,9 @@
   <insert id="insertSelective" parameterType="com.zy.wm.entities.Wm" >
     insert into T_WM
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
+     
         id,
-      </if>
+      
       <if test="wmId != null" >
         wm_id,
       </if>
@@ -47,9 +47,7 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=DECIMAL},
-      </if>
+    	SEQ_T_WM.NEXTVAL,
       <if test="wmId != null" >
         #{wmId,jdbcType=VARCHAR},
       </if>
@@ -120,7 +118,7 @@
 		)A
 		WHERE rownum &lt;= #{end,jdbcType=DECIMAL}
 		) B
-		WHERE r &gt;#{start,jdbcType=DECIMAL} order by B.WM_ID
+		WHERE r &gt;#{start,jdbcType=DECIMAL} order by ID
 	</select>
   
 </mapper>

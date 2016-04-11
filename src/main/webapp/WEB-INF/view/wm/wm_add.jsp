@@ -78,7 +78,7 @@
 					$.messager.alert("提示", "添加成功", "info", function() {
 					})
 					win_add.dialog("destroy");
-					$("#menu_div").demo_datagrid("reload");
+					$("#demo_datagrid").datagrid("reload");
 				}
 			}, "json");
 
