@@ -2,14 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.zy.wm.dao.WmMapper" >
   <resultMap id="BaseResultMap" type="com.zy.wm.entities.Wm" >
-    <id column="id" property="id" jdbcType="DECIMAL" />
-    <result column="wm_id" property="wmId" jdbcType="VARCHAR" />
-    <result column="wm_name" property="wmName" jdbcType="VARCHAR" />
-    <result column="wm_count" property="wmCount" jdbcType="DECIMAL" />
-    <result column="wm_all" property="wmAll" jdbcType="DECIMAL" />
+    <id column="ID" property="id" jdbcType="DECIMAL" />
+    <result column="WM_ID" property="wmId" jdbcType="VARCHAR" />
+    <result column="WM_NAME" property="wmName" jdbcType="VARCHAR" />
+    <result column="WM_COUNT" property="wmCount" jdbcType="DECIMAL" />
+    <result column="WM_ALL" property="wmAll" jdbcType="DECIMAL" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, wm_id, wm_name, wm_count, wm_all
+    ID,WM_ID,WM_NAME,WM_COUNT,WM_ALL
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
@@ -120,7 +120,7 @@
 		)A
 		WHERE rownum &lt;= #{end,jdbcType=DECIMAL}
 		) B
-		WHERE r &gt;#{start,jdbcType=DECIMAL} order by b."wm_id"
+		WHERE r &gt;#{start,jdbcType=DECIMAL} order by B.WM_ID
 	</select>
   
 </mapper>

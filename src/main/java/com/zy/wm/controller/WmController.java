@@ -54,27 +54,12 @@ public class WmController {
 		return map;
 	}
 
-	@RequestMapping(value = "/rolelist.do", method = RequestMethod.POST)
-	public @ResponseBody Map<String, Object> rolelist(
-			HttpServletRequest request, Long userid) {
-		int rows = Integer.valueOf(request.getParameter("rows"));
-		int page = Integer.valueOf(request.getParameter("page"));
-		Map<String, Object> map = new HashMap<String, Object>();
-		map = roleService.queryAll(rows, page, new Role());
-
-		UserRole userrole = userRolerService.selectByPrimaryUserId(userid);
-		if (null != userrole) {
-			Long roleid = userrole.getRoleId();
-			map.put("roleid", roleid);
-		}
-		return map;
-	}
 
 	@RequestMapping(value = "/view", method = RequestMethod.GET)
 	public String view(Model model, Long id) {
 		Wm wm = wmService.selectByPrimaryKey(id) ;
-		model.addAttribute("user", wm);
-		return View.wm.WM_ADD;
+		model.addAttribute("wm", wm);
+		return View.wm.WM_VIEW;
 	}
 
 	@RequestMapping(value = "/toAdd", method = RequestMethod.GET)
@@ -83,10 +68,9 @@ public class WmController {
 	}
 
 	@RequestMapping(value = "/submit", method = RequestMethod.POST)
-	public @ResponseBody Map<String, Object> add(User user) {
+	public @ResponseBody Map<String, Object> add(Wm wm) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		int isSuccess = userService.insert(user);
-
+		int isSuccess = wmService.insert(wm);
 		if (isSuccess == 0) {
 			map.put("msg", "添加失败");
 			map.put("flag", "false");

@@ -96,7 +96,7 @@
 				width : 600,
 				height : 400,
 				modal : true,
-				href : '<%=path%>/wm/view.do?id=' + id,
+				href : '<%=path%>/wm/view?id=' + id,
 			onClose : function() {
 				demo_window_close();
 			}
@@ -111,7 +111,7 @@
 			width:600,
 			height:400,
 			modal:true,
-			href:'<%=path%>/demo/toAdd.do',
+			href:'<%=path%>/wm/toAdd',
 			onClose:function(){
 				demo_window_close();
 			}
