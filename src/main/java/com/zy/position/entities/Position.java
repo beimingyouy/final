@@ -3,7 +3,7 @@ package com.zy.position.entities;
 public class Position {
     private Long id;
 
-    private Long pId;
+    private String pId;
 
     private Long pCount;
 
@@ -19,11 +19,11 @@ public class Position {
         this.id = id;
     }
 
-    public Long getpId() {
+    public String getpId() {
         return pId;
     }
 
-    public void setpId(Long pId) {
+    public void setpId(String pId) {
         this.pId = pId;
     }
 

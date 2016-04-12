@@ -3,13 +3,13 @@
 <mapper namespace="com.zy.position.dao.PositionMapper" >
   <resultMap id="BaseResultMap" type="com.zy.position.entities.Position" >
     <id column="id" property="id" jdbcType="DECIMAL" />
-    <result column="p_id" property="pId" jdbcType="DECIMAL" />
-    <result column="p_count" property="pCount" jdbcType="DECIMAL" />
-    <result column="p_all" property="pAll" jdbcType="DECIMAL" />
-    <result column="p_name" property="pName" jdbcType="VARCHAR" />
+    <result column="p_ID" property="pId" jdbcType="VARCHAR" />
+    <result column="P_COUNT" property="pCount" jdbcType="DECIMAL" />
+    <result column="P_ALL" property="pAll" jdbcType="DECIMAL" />
+    <result column="P_NAME" property="pName" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, p_id, p_count, p_all, p_name
+    ID, p_id, p_count, p_all, p_name
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
@@ -30,9 +30,9 @@
   <insert id="insertSelective" parameterType="com.zy.position.entities.Position" >
     insert into T_POSITION
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
+      
         id,
-      </if>
+    
       <if test="pId != null" >
         p_id,
       </if>
@@ -47,9 +47,9 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=DECIMAL},
-      </if>
+   
+      SEQ_T_POSITION.NEXTVAL,
+  
       <if test="pId != null" >
         #{pId,jdbcType=DECIMAL},
       </if>
@@ -90,4 +90,37 @@
       p_name = #{pName,jdbcType=VARCHAR}
     where id = #{id,jdbcType=DECIMAL}
   </update>
+  
+  
+    
+  <select id="getTotal" resultType="INTEGER">
+		select
+		count(*)
+		from (
+		select * from t_position
+		<where>
+			<if test="pId!=null and pId != ''">
+				AND P_ID like '%' || #{pId,jdbcType=VARCHAR} || '%'
+			</if>
+			
+		</where>
+		)
+	</select>
+	<select id="queryAll" resultMap="BaseResultMap">
+		SELECT * FROM
+		(
+		SELECT A.*, rownum r
+		FROM
+		(select * from t_position
+		<where>
+			<if test="pId!=null and pId != ''">
+				AND p_id like '%' || #{pId,jdbcType=VARCHAR} || '%'
+			</if>
+
+		</where>
+		)A
+		WHERE rownum &lt;= #{end,jdbcType=DECIMAL}
+		) B
+		WHERE r &gt;#{start,jdbcType=DECIMAL} order by ID
+	</select>
 </mapper>

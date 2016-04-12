@@ -96,7 +96,7 @@
 				} else {
 					$.messager.alert("提示", "更新成功", "info", function() {
 					})
-					win_update.dialog("destroy");
+					win.dialog("destroy");
 					$("#menu_div").treegrid("reload");
 				}
 			}, "json");

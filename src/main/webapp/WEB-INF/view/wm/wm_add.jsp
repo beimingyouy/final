@@ -55,7 +55,15 @@
 	}
 	//提交添加
 	function add_demo_submit(){
-		
+		var count = $("#wmCount").val();
+		var all = $("#wmAll").val();
+		if(all<count){
+			   $.messager.alert("错误提示", "可用数量大于总数量！" , "error",
+						function() {
+				   
+				});
+			   return ; 
+		}
 		 var isValid = $('#demo_add_form').form('validate'); 
 	       if(isValid==false){
 	    	   $.messager.alert("错误提示", "您有必填内容为填写" , "error",
@@ -77,7 +85,7 @@
 				} else {
 					$.messager.alert("提示", "添加成功", "info", function() {
 					})
-					win_add.dialog("destroy");
+					win.dialog("destroy");
 					$("#demo_datagrid").datagrid("reload");
 				}
 			}, "json");

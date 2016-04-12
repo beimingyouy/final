@@ -73,7 +73,7 @@
 				} else {
 					$.messager.alert("提示", "添加成功", "info", function() {
 					})
-					win_add.dialog("destroy");
+					win.dialog("destroy");
 					$("#menu_div").treegrid("reload");
 				}
 			}, "json");

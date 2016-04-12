@@ -28,15 +28,15 @@
 		var toolbar =  new Array();
 		$(function(){
 			var toolbar = [
-		              {id:"add", 		text:"添加仓储资源",		iconCls:'icon-add',
+		              {id:"add", 		text:"添加仓位资源",		iconCls:'icon-add',
 		          	   handler: 		function(){
 		          		   					demo_add();
 		          		   				}},
-		          	  {id:"edit", 		text:"编辑仓储资源",		iconCls:'icon-edit',
+		          	  {id:"edit", 		text:"编辑仓位资源",		iconCls:'icon-edit',
 			           handler: 		function(){
 			        	   					demo_edit();
 			        	   				}},
-			          {id:"delete", 	text:"删除仓储",		iconCls:'icon-remove',
+			          {id:"delete", 	text:"删除仓位",		iconCls:'icon-remove',
 				       handler: 		function(){
 				    	  					demo_delete();
 				    	   				}},
@@ -47,7 +47,7 @@
 	                ];
 			//定义列表
 			$('#demo_datagrid').datagrid({
-				url:'<%=path%>/wm/list',
+				url:'<%=path%>/position/list',
 			fit : true,
 			fitColumns : false,
 			singleSelect : false,
@@ -63,23 +63,23 @@
 				width : 80
 			} ] ],
 			columns : [ [ {
-				field : 'wmId',
-				title : '仓储编号',
+				field : 'pId',
+				title : '仓位编号',
 				align : 'center',
 				width : 100
 			}, {
-				field : 'wmName',
-				title : '仓储名称',
+				field : 'pName',
+				title : '仓位名称',
 				align : 'center',
 				width : 100
 			}, {
-				field : 'wmCount',
+				field : 'pCount',
 				title : '可用数量',
 				align : 'center',
 				width : 100
 			}, {
-				field : 'wmAll',
-				title : '仓储名称',
+				field : 'pAll',
+				title : '仓位名称',
 				align : 'center',
 				width : 100
 			}
@@ -96,7 +96,7 @@
 				width : 600,
 				height : 400,
 				modal : true,
-				href : '<%=path%>/wm/view?id=' + id,
+				href : '<%=path%>/position/view?id=' + id,
 			onClose : function() {
 				demo_window_close();
 			}
@@ -111,7 +111,7 @@
 			width:600,
 			height:400,
 			modal:true,
-			href:'<%=path%>/wm/toAdd',
+			href:'<%=path%>/position/toAdd',
 			onClose:function(){
 				demo_window_close();
 			}
@@ -130,34 +130,13 @@
 			width:600,
 			height:400,
 			modal:true,
-			href:'<%=path%>/wm/toUpdate?id='+row[0].id,
+			href:'<%=path%>/position/toUpdate?id='+row[0].id,
 			onClose:function(){
 				demo_window_close();
 			}
 		});
 	}
-	//提交修改
-	function update_demo_submit(){
-		var formdate = $("#demo_update_form").serializeArray();
-		var url = "<%=path%>/wm/update";
-		$.post(url,formdate,function(json){
-			var flag = json.flag;
-			var msg = json.msg;
-			if(flag == "false"){
-				$.messager.alert("错误提示", "修改失败， 原因是" + msg, "error",
-						function() {
-						})
-			}
-			else{
-				$.messager.alert("提示", "修改成功", "info", function() {
-				})
-				win_update.dialog("destroy");
-				$("#demo_datagrid").datagrid("reload");
-			}
-			
-		},"json")		
-	}
-
+	
 	//删除
 	function demo_delete() {
 		var row = $('#demo_datagrid').datagrid('getChecked');
@@ -173,7 +152,7 @@
 			}
 		}
 	
-		var url = '<%=path%>/wm/toDelete?ids='+ids;
+		var url = '<%=path%>/position/toDelete?ids='+ids;
 		$.messager.confirm('确认', '您是否要删除？', function(r) {
 			if (r) {
 			$.post(url,ids,function(json){
@@ -197,13 +176,13 @@
 		}
 	//条件查询
 	function demoSearch() {
-		$('#demo_datagrid').datagrid('load', {wmId:$('#wmId').val()});		
+		$('#demo_datagrid').datagrid('load', {pId:$('#pId').val()});		
 	}
 
 	//重置
 	function demoReset() {
 		$('#demo_list_form').form('reset');
-		$('#demo_datagrid').datagrid('load', {wmId:$('#wmId').val()});
+		$('#demo_datagrid').datagrid('load', {pId:$('#pId').val()});
 	}
 
 
@@ -231,8 +210,8 @@
 			<form id="demo_list_form" method="post">
 				<table cellpadding="0" cellspacing="1" class="formtable">
 					<tr>
-						<td align="center" width="10%">仓储编号</td>
-						<td class="value" width="20%"><input id="wmId" name="wmId"
+						<td align="center" width="10%">仓位编号</td>
+						<td class="value" width="20%"><input id="pId" name="pId"
 							class="easyui-validatebox"></td>
 						</td>
 						<td colspan="2" align="center" class="value" width="40%"><a

@@ -124,7 +124,7 @@
 			}
 			var parentid = row1[0].id;
 			var grade = row1[0].grade;
-			 win_add = $('<div/>').dialog({
+			 win = $('<div/>').dialog({
 				title : '添加子级菜单',
 				width : 600,
 				height : 400,
@@ -182,6 +182,10 @@
 				}
 				})
 			};
+			//销毁窗口
+			function demo_window_close() {
+				win.dialog('destroy');
+			}
 	
 </script>
 </head>

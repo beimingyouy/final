@@ -1,4 +1,4 @@
-package com.zy.wm.controller;
+package com.zy.position.controller;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -12,52 +12,53 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.zy.wm.entities.Wm;
-import com.zy.wm.services.WmService;
-import com.zy.wm.view.View;
+import com.zy.position.entities.Position;
+import com.zy.position.services.PositionService;
+import com.zy.position.view.View;
 
 @Controller
-@RequestMapping("/wm")
-public class WmController {
-
+@RequestMapping("/position")
+public class PositionController {
 
 	@Autowired
-	private WmService wmService;
+	private PositionService PositionService;
+	
 
+	
 
-	@RequestMapping("/wmList")
-	public String wmList() {
+	@RequestMapping("/list")
+	public String PositionList() {
 
-		return View.wm.WM_LIST;
+		return View.p.P_LIST;
 	}
 
 	@RequestMapping(value = "/list", method = RequestMethod.POST)
-	public @ResponseBody Map<String, Object> loadMenu(HttpServletRequest request, String wmId) {
-		Wm wm = new Wm();
-		wm.setWmId(wmId);
+	public @ResponseBody Map<String, Object> loadMenu(HttpServletRequest request, String pId) {
+		Position Position = new Position();
+		Position.setpId(pId);
 		int rows = Integer.valueOf(request.getParameter("rows"));
 		int page = Integer.valueOf(request.getParameter("page"));
 		Map<String, Object> map = new HashMap<String, Object>();
-		map = wmService.queryAll(rows, page, wm);
+		map = PositionService.queryAll(rows, page, Position);
 		return map;
 	}
 
 	@RequestMapping(value = "/view", method = RequestMethod.GET)
 	public String view(Model model, Long id) {
-		Wm wm = wmService.selectByPrimaryKey(id);
-		model.addAttribute("wm", wm);
-		return View.wm.WM_VIEW;
+		Position p = PositionService.selectByPrimaryKey(id);
+		model.addAttribute("p", p);
+		return View.p.P_VIEW;
 	}
 
 	@RequestMapping(value = "/toAdd", method = RequestMethod.GET)
 	public String addView() {
-		return View.wm.WM_ADD;
+		return View.p.P_ADD;
 	}
 
 	@RequestMapping(value = "/submit", method = RequestMethod.POST)
-	public @ResponseBody Map<String, Object> add(Wm wm) {
+	public @ResponseBody Map<String, Object> add(Position Position) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		int isSuccess = wmService.insert(wm);
+		int isSuccess = PositionService.insert(Position);
 		if (isSuccess == 0) {
 			map.put("msg", "添加失败");
 			map.put("flag", "false");
@@ -70,15 +71,15 @@ public class WmController {
 
 	@RequestMapping(value = "/toUpdate", method = RequestMethod.GET)
 	public String toUpdate(Model model, Long id) {
-		Wm wm = wmService.selectByPrimaryKey(id);
-		model.addAttribute("wm", wm);
-		return View.wm.WM_UPDATE;
+		Position Position = PositionService.selectByPrimaryKey(id);
+		model.addAttribute("p", Position);
+		return View.p.P_UPDATE;
 	}
 
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
-	public @ResponseBody Map<String, Object> update(Wm wm) {
+	public @ResponseBody Map<String, Object> update(Position Position) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		int isSuccess = wmService.update(wm);
+		int isSuccess = PositionService.update(Position);
 
 		if (isSuccess == 0) {
 			map.put("msg", "更新失败");
@@ -96,7 +97,7 @@ public class WmController {
 		try {
 			String[] idstr = ids.split(",");
 			for (String id : idstr) {
-				wmService.delete(Long.parseLong(id));
+				PositionService.delete(Long.parseLong(id));
 			}
 			map.put("msg", "删除成功");
 			map.put("flag", "success");

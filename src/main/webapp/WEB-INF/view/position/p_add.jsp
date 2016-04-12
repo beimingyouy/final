@@ -17,51 +17,26 @@
 	<form id="demo_add_form">
 		<table cellpadding="5">
 			<tr>
-				<td>父id：</td>
-				<td><input type="text"name="parentid" value="${parentid}" readonly="readonly"></input></td>
+				<td>仓位编号:</td>
+				<td><input class="easyui-validatebox" type="text" name="pId"
+					id="pId" data-options=" required:true" /></td>
 			</tr>
 			<tr>
-				<td>编号:</td>
-				<td><input class="easyui-validatebox" type="text"
-					name="menuId" id = "menuId"
-					data-options=" required:true" /></td>
+				<td>仓位名称:</td>
+				<td><input class="easyui-validatebox" type="text" name="pName"
+					id="pName" data-options=" required:true" /></td>
 			</tr>
 			<tr>
-				<td>菜单名：</td>
-				<td><input class="easyui-validatebox" type="text"
-					name="menuName" id ="menuName"
-					data-options="required:true,validType:'menuHref'"></input></td>
+				<td>仓位总大小:</td>
+				<td><input class="easyui-validatebox" type="text" name="pAll"
+					id="pAll" data-options=" required:true" /></td>
 			</tr>
 			<tr>
-				<td>是否叶子节点：</td>
-				<td><input id="isleft" name="isleft"  value = "1" class="easyui-combobox" data-options="
-				    valueField: 'value',
-				    required:true,
-				    textField: 'label',
-				    editable:false,
-				    panelHeight:'auto',
-				    data: 
-				    [{
-					    label: '是',
-					    value: '1'
-				    },{
-					    label: '否',
-					    value: '0'
-					   
-				    }]" /></td>
+				<td>可用大小:</td>
+				<td><input class="easyui-validatebox" type="text" name="pCount"
+					id="pCount" data-options=" required:true" /></td>
 			</tr>
-			<tr >
-				<td>链接地址：</td>
-				<td><input class="easyui-validatebox" type="text"
-					name="menuHref" data-options="validType:'menuHref'"></input></td>
-			</tr>
-			<tr>
-			<tr style="display:none">			
-				<td>grade：</td>
-				<td><input type="text"name="grade" value="${grade+1}"></input></td>
-							
-			</tr>
-			
+
 			<tr>
 				<td><a id="sava_btn" href="javascript:void(0)"
 					onclick="add_demo_submit()" class="easyui-linkbutton"
@@ -69,7 +44,7 @@
 				<td><a href="javascript:void(0);" class="easyui-linkbutton"
 					data-options="iconCls:'icon-reload',plain:false,onClick:function(){formreset()}">重置</a></td>
 			</tr>
-			
+
 
 		</table>
 	</form>
@@ -80,7 +55,16 @@
 	}
 	//提交添加
 	function add_demo_submit(){
-
+		var count = $("#pCount").val();
+		var all = $("#pAll").val();
+		if(all<count){
+			   $.messager.alert("错误提示", "可用数量大于总数量！" , "error",
+						function() {
+				   
+				});
+			   return ; 
+		}
+		
 		 var isValid = $('#demo_add_form').form('validate'); 
 	       if(isValid==false){
 	    	   $.messager.alert("错误提示", "您有必填内容为填写" , "error",
@@ -90,7 +74,7 @@
 	       }
 	       
 		var formdate = $('#demo_add_form').serializeArray();
-		var url = '<%=path%>/menu/submit.do';
+		var url = '<%=path%>/position/submit';
 			$.post(url, formdate, function(json) {				
 				var flag = json.flag;
 				var msg = json.msg;
@@ -102,8 +86,8 @@
 				} else {
 					$.messager.alert("提示", "添加成功", "info", function() {
 					})
-					win_add.dialog("destroy");
-					$("#menu_div").treegrid("reload");
+					win.dialog("destroy");
+					$("#demo_datagrid").datagrid("reload");
 				}
 			}, "json");
 

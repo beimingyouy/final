@@ -1,5 +1,9 @@
 package com.zy.position.dao;
 
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+
 import com.zy.position.entities.Position;
 
 public interface PositionMapper {
@@ -14,4 +18,8 @@ public interface PositionMapper {
     int updateByPrimaryKeySelective(Position record);
 
     int updateByPrimaryKey(Position record);
+    
+    List<Position> queryAll(@Param("start")int start,@Param("end")int end,@Param("pId")String pId);
+
+   	Integer getTotal(@Param("pId")String pId);
 }

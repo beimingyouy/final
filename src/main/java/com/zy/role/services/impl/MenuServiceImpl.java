@@ -113,7 +113,7 @@ public class MenuServiceImpl implements MenuService {
 				 */
 
 				Map<String, Object> parentNode = id_nodeMap.get(parentId + "");
-				parentNode.put("state", "closed");
+				parentNode.put("state", "open");
 				List<Map<String, Object>> children = null;
 				if (parentNode.get("children") == null) {
 					children = new ArrayList<Map<String, Object>>();
