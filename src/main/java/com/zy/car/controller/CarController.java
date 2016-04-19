@@ -45,8 +45,8 @@ public class CarController {
 
 	@RequestMapping(value = "/view", method = RequestMethod.GET)
 	public String view(Model model, Long id) {
-		Car p = CarService.selectByPrimaryKey(id);
-		model.addAttribute("p", p);
+		Car car = CarService.selectByPrimaryKey(id);
+		model.addAttribute("car", car);
 		return View.car.CAR_VIEW;
 	}
 
@@ -72,7 +72,7 @@ public class CarController {
 	@RequestMapping(value = "/toUpdate", method = RequestMethod.GET)
 	public String toUpdate(Model model, Long id) {
 		Car Car = CarService.selectByPrimaryKey(id);
-		model.addAttribute("p", Car);
+		model.addAttribute("car", Car);
 		return View.car.CAR_UPDATE;
 	}
 

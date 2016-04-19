@@ -30,9 +30,9 @@
   <insert id="insertSelective" parameterType="com.zy.car.entities.Car" >
     insert into T_CAR
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
+     
         ID,
-      </if>
+     
       <if test="carId != null" >
         CAR_ID,
       </if>
@@ -47,9 +47,7 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=DECIMAL},
-      </if>
+     	SEQ_T_CAR.NEXTVAL,
       <if test="carId != null" >
         #{carId,jdbcType=VARCHAR},
       </if>

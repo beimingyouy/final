@@ -18,34 +18,34 @@
 		<table cellpadding="5">
 			<tr>
 				<td>id：</td>
-				<td>${p.id}
+				<td>${car.id}
 			</tr>
 			<tr>
-				<td>仓位编号：</td>
-				<td>${p.pId}
+				<td>车辆编号：</td>
+				<td>${car.carId}
 			</tr>
 
 			<tr>
-				<td>仓位名称：</td>
-				<td><input class="easyui-validatebox" type="text" name="pName"
-					value="${p.pName}"
+				<td>车辆名称：</td>
+				<td><input class="easyui-validatebox" type="text" name="carName"
+					value="${car.carName}"
 					data-options="required:true,validType:'pCount',missingMessage:'请输入仓位名称！'"></input></td>
 			</tr>
 			<tr>
 				<td>可用数量：</td>
-				<td><input class="easyui-validatebox" type="text" id="pCount"
-					name="pCount" value="${p.pCount}"
+				<td><input class="easyui-validatebox" type="text" id="carCount"
+					name="carCount" value="${car.carCount}"
 					data-options="required:true,validType:'code',missingMessage:'请输入可用数量！'"></input></td>
 			</tr>
 			<tr>
 				<td>总数量：</td>
-				<td><input class="easyui-validatebox" type="text" name="pAll"
-					id="pAll" value="${p.pAll}"
+				<td><input class="easyui-validatebox" type="text" name="carAll"
+					id="carAll" value="${car.carAll}"
 					data-options="required:true,validType:'code',missingMessage:'请输入总数量！'"></input></td>
 			</tr>
 			<tr>
 			<tr>
-				<td><input type="hidden" name="id" value="${p.id}" />
+				<td><input type="hidden" name="id" value="${car.id}" />
 				<td><a id="sava_btn" href="javascript:void(0)"
 					onclick="update_demo_submit()" class="easyui-linkbutton"
 					data-options="iconCls:'icon-save'">保存数据</a> <a
@@ -61,8 +61,9 @@
 	}
 	//提交修改
 	function update_demo_submit(){
-		var count = $("#pCount").val();
-		var all = $("#pAll").val();
+		var count = $("#carCount").val();
+		var all = $("#carAll").val();
+
 		if(all<count){
 			   $.messager.alert("错误提示", "可用数量大于总数量！" , "error",
 						function() {
@@ -72,14 +73,14 @@
 		}
 		 var isValid = $('#demo_update_form').form('validate'); 
 	       if(isValid==false){
-	    	   $.messager.alert("错误提示", "您有必填内容为填写" , "error",
+	    	   $.messager.alert("错误提示", "您有内容填写错误需要确认！" , "error",
 						function() {
 				});
 	           return ;
 	       }
 	       
 		var formdate = $("#demo_update_form").serializeArray();
-		var url = "<%=path%>/position/update";
+		var url = "<%=path%>/car/update";
 			$.post(url, formdate, function(json) {
 				var flag = json.flag;
 				var msg = json.msg;

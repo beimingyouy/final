@@ -17,24 +17,24 @@
 	<form id="demo_add_form">
 		<table cellpadding="5">
 			<tr>
-				<td>仓位编号:</td>
-				<td><input class="easyui-validatebox" type="text" name="pId"
-					id="pId" data-options=" required:true" /></td>
+				<td>车辆编号:</td>
+				<td><input class="easyui-validatebox" type="text" name="carId"
+					id="carId" data-options=" required:true" /></td>
 			</tr>
 			<tr>
-				<td>仓位名称:</td>
-				<td><input class="easyui-validatebox" type="text" name="pName"
-					id="pName" data-options=" required:true" /></td>
+				<td>车辆名称:</td>
+				<td><input class="easyui-validatebox" type="text" name="carName"
+					id="carName" data-options=" required:true" /></td>
 			</tr>
 			<tr>
-				<td>仓位总大小:</td>
-				<td><input class="easyui-validatebox" type="text" name="pAll"
-					id="pAll" data-options=" required:true" /></td>
+				<td>车辆总数目:</td>
+				<td><input class="easyui-validatebox" type="text" name="carAll"
+					id="carAll" data-options=" required:true" /></td>
 			</tr>
 			<tr>
-				<td>可用大小:</td>
-				<td><input class="easyui-validatebox" type="text" name="pCount"
-					id="pCount" data-options=" required:true" /></td>
+				<td>车辆可用数目:</td>
+				<td><input class="easyui-validatebox" type="text" name="carCount"
+					id="carCount" data-options=" required:true" /></td>
 			</tr>
 
 			<tr>
@@ -55,8 +55,8 @@
 	}
 	//提交添加
 	function add_demo_submit(){
-		var count = $("#pCount").val();
-		var all = $("#pAll").val();
+		var count = $("#carCount").val();
+		var all = $("#carAll").val();
 		if(all<count){
 			   $.messager.alert("错误提示", "可用数量大于总数量！" , "error",
 						function() {
@@ -74,7 +74,7 @@
 	       }
 	       
 		var formdate = $('#demo_add_form').serializeArray();
-		var url = '<%=path%>/position/submit';
+		var url = '<%=path%>/car/submit';
 			$.post(url, formdate, function(json) {				
 				var flag = json.flag;
 				var msg = json.msg;

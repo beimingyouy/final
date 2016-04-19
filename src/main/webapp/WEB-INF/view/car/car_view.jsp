@@ -13,23 +13,23 @@
 			<table cellpadding="5">
 				<tr>
 					<td>id：</td>
-					<td>${p.id}</td>
+					<td>${car.id}</td>
 				</tr>
 				<tr>
-					<td>仓位编号：</td>
-					<td>${p.pId}</td>
+					<td>车辆编号：</td>
+					<td>${car.carId}</td>
 				</tr>
 				<tr>
-					<td>仓位名称：</td>
-					<td>${p.pName}</td>
+					<td>车辆名称：</td>
+					<td>${car.carName}</td>
 				</tr>
 				<tr>
-					<td>仓位可用位置（立方米）：</td>
-					<td>${p.pCount}</td>
+					<td>可用车辆数：</td>
+					<td>${car.carCount}</td>
 				</tr>
 				<tr>
-					<td>仓位总大小（立方米）：</td>
-					<td>${p.pAll}</td>
+					<td>总车辆数：</td>
+					<td>${car.carAll}</td>
 				</tr>
 			</table>
 
