@@ -196,10 +196,12 @@ $(function(){
 			content:createFrame(url),
 			closable:true,
 		
-		});
+		}
+		);
+		
 		}else{
 			
-		//$('#tabs').tabs('select',subtitle);
+		$('#tabs').tabs('select',subtitle);
 			var currTab =  self.parent.$('#tabs').tabs('getSelected'); //获得当前tab
 		    var url = $(currTab.panel('options').content).attr('src');
 		    self.parent.$('#tabs').tabs('update', {

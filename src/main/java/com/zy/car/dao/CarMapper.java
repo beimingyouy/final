@@ -9,7 +9,7 @@ import com.zy.car.entities.Car;
 public interface CarMapper {
 	int deleteByPrimaryKey(Long id);
 
-	int insert(Car record);
+	int Carsert(Car record);
 
 	int insertSelective(Car record);
 
@@ -21,5 +21,5 @@ public interface CarMapper {
 
 	List<Car> queryAll(@Param("start") int start, @Param("end") int end, @Param("carId") String carId);
 
-	Integer getTotal(@Param("carId") String carId);
+	Integer getTotal(@Param("carId") String CarId);
 }

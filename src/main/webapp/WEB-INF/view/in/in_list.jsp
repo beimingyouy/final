@@ -47,7 +47,7 @@
 	                ];
 			//定义列表
 			$('#demo_datagrid').datagrid({
-				url:'<%=path%>/car/list',
+				url:'<%=path%>/in/list',
 			fit : true,
 			fitColumns : false,
 			singleSelect : false,
@@ -63,25 +63,62 @@
 				width : 80
 			} ] ],
 			columns : [ [ {
-				field : 'carId',
-				title : '车辆编号',
+				field : 'inId',
+				title : '入库单编号',
 				align : 'center',
 				width : 100
 			}, {
-				field : 'carName',
-				title : '车辆名称',
+				field : 'inNote',
+				title : '订单备注',
 				align : 'center',
 				width : 100
 			}, {
-				field : 'carCount',
-				title : '可用数量',
+				field : 'wmId',
+				title : '仓储类型',
 				align : 'center',
 				width : 100
 			}, {
-				field : 'carAll',
-				title : '车辆名称',
+				field : 'wmCount',
+				title : '占用数量',
 				align : 'center',
 				width : 100
+			}, {
+				field : 'pId',
+				title : '仓库类型',
+				align : 'center',
+				width : 100
+			}, {
+				field : 'pCount',
+				title : '占用体积（立方米）',
+				align : 'center',
+				width : 150
+			}, {
+				field : 'createTime',
+				title : '入库单创建时间',
+				align : 'center',
+				width : 200,
+				formatter:function(value,row,index){ 
+					if (value != null) {
+						console.log(value);
+						var date = new Date(value);
+						return date.getFullYear() + '-' + (date.getMonth() + 1) + '-'
+						+ date.getDate()+" "+date.getHours() +":"+date.getMinutes()+":"+date.getMinutes();
+						}
+                    } 
+			}, {
+				field : 'updateTime',
+				title : '入库单更新时间',
+				align : 'center',
+				width : 200,
+				formatter:function(value,row,index){ 
+					if (value != null) {
+						console.log(value);
+						var date = new Date(value);
+						return date.getFullYear() + '-' + (date.getMonth() + 1) + '-'
+						+ date.getDate()+" "+date.getHours() +":"+date.getMinutes()+":"+date.getMinutes();
+						}
+                    } 
+				 
 			}
 			] ],
 			onDblClickRow : function(rowIndex, rowData) {
