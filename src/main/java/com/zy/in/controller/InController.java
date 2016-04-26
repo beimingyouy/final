@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.zy.car.entities.Car;
-import com.zy.car.services.CarService;
 import com.zy.in.entities.In;
 import com.zy.in.services.InService;
 import com.zy.in.view.View;
+import com.zy.out.entities.Out;
+import com.zy.out.services.OutService;
 import com.zy.position.entities.Position;
 import com.zy.position.services.PositionService;
 import com.zy.wm.entities.Wm;
@@ -32,9 +32,9 @@ public class InController {
 	private WmService wmService;
 	@Autowired
 	private PositionService pService;
+	
+	private OutService outService;
 
-	@Autowired
-	private CarService CarService;
 	@Autowired
 	private InService inService;
 
@@ -61,6 +61,9 @@ public class InController {
 	public String view(Model model, Long id) {
 		In in = inService.selectByPrimaryKey(id);
 		model.addAttribute("in", in);
+		
+	
+
 		return View.in.IN_VIEW;
 	}
 
@@ -111,18 +114,22 @@ public class InController {
 	@RequestMapping(value = "/toUpdate", method = RequestMethod.GET)
 	public String toUpdate(Model model, Long id) {
 		In in = inService.selectByPrimaryKey(id);
-		model.addAttribute(in);
+		model.addAttribute("in", in);
+		
+		System.out.println(in.getState());
+		System.out.println(in.getState());
+		System.out.println(in.getState());
+		System.out.println(in.getState());
+		System.out.println(in.getState());
 		return View.in.IN_UPDATE;
 	}
 
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public @ResponseBody Map<String, Object> update(In in,String state) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		System.out.println(in.getWmId());
-		System.out.println(in.getWmId());
-		System.out.println(in.getWmId());
-		System.out.println(in.getWmId());
-		int isSuccess = inService.update(in);
+	
+		int isSuccess = inService.update(in,state);
+		
 		
 		System.out.println(in.getWmId());
 		
@@ -141,18 +148,23 @@ public class InController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		try {
 			String[] idstr = ids.split(",");
+
 			for (String id : idstr) {
+				System.out.println(id+"!!!!!!!!!!!!!");
 				inService.delete(Long.parseLong(id));
 			}
 			map.put("msg", "删除成功");
 			map.put("flag", "success");
 		} catch (Exception e) {
-			log.info("删除失败");
+			e.printStackTrace();
+			log.info("删除失败!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 			map.put("msg", "删除失败");
 			map.put("flag", "false");
 		}
 
 		return map;
 	}
+	
+
 
 }

@@ -28,11 +28,11 @@
 		var toolbar =  new Array();
 		$(function(){
 			var toolbar = [
-		              {id:"add", 		text:"入库单申请",		iconCls:'icon-add',
+		              {id:"add", 		text:"出库",		iconCls:'icon-add',
 		          	   handler: 		function(){
 		          		   					demo_add();
 		          		   				}},
-		          	  {id:"edit", 		text:"审核",		iconCls:'icon-edit',
+		          	  {id:"edit", 		text:"出库单完成确认",		iconCls:'icon-edit',
 			           handler: 		function(){
 			        	   					demo_edit();
 			        	   				}},
@@ -47,7 +47,7 @@
 	                ];
 			//定义列表
 			$('#demo_datagrid').datagrid({
-				url:'<%=path%>/in/list',
+				url:'<%=path%>/out/list',
 			fit : true,
 			fitColumns : false,
 			singleSelect : false,
@@ -63,36 +63,21 @@
 				width : 80
 			} ] ],
 			columns : [ [ {
-				field : 'inId',
-				title : '入库单编号',
+				field : 'outId',
+				title : '出库单编号',
 				align : 'center',
 				width : 100
 			}, {
-				field : 'inNote',
-				title : '订单备注',
+				field : 'carId',
+				title : '车辆类型',
 				align : 'center',
 				width : 100
 			}, {
-				field : 'wmId',
-				title : '仓储类型',
-				align : 'center',
-				width : 100
-			}, {
-				field : 'wmCount',
+				field : 'carCount',
 				title : '占用数量',
 				align : 'center',
 				width : 100
-			}, {
-				field : 'pId',
-				title : '仓库类型',
-				align : 'center',
-				width : 100
-			}, {
-				field : 'pCount',
-				title : '占用体积（立方米）',
-				align : 'center',
-				width : 150
-			}, {
+			},{
 				field : 'state',
 				title : '审核状态',
 				align : 'center',
@@ -110,19 +95,19 @@
 					}},
 					formatter: function(value,row,index){
 						if (value==1){
-							return "审核成功";
+							return "出库审核成功";
 						} else if(value==0){
-							return "审核失败";
+							return "出库失败";
 						}else{
-							return "待审核";
+							return "待出库";
 						}
 					}
 
 
 			
 			}, {
-				field : 'createTime',
-				title : '入库单创建时间',
+				field : 'createDate',
+				title : '出库单创建时间',
 				align : 'center',
 				width : 200,
 				formatter:function(value,row,index){ 
@@ -138,7 +123,7 @@
                     } 
 			}, {
 				field : 'updateTime',
-				title : '入库单更新时间',
+				title : '实际出库时间',
 				align : 'center',
 				width : 200,
 				formatter:function(value,row,index){ 

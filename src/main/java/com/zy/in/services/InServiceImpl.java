@@ -9,6 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.zy.in.dao.InMapper;
 import com.zy.in.entities.In;
+import com.zy.out.dao.OutMapper;
+import com.zy.out.entities.Out;
 import com.zy.position.dao.PositionMapper;
 import com.zy.position.entities.Position;
 import com.zy.wm.dao.WmMapper;
@@ -18,14 +20,14 @@ import com.zy.wm.entities.Wm;
 @Service
 public class InServiceImpl implements InService {
 
-
 	@Autowired
 	private InMapper inMapper;
 	@Autowired
 	private WmMapper wmMapper;
 	@Autowired
 	private PositionMapper pMapper;
-
+	@Autowired
+	private OutMapper outMapper;
 	public Map<String, Object> queryAll(int rows, int pagenum, In in) {
 
 		Map<String, Object> datemap = new HashMap<String, Object>();
@@ -37,37 +39,47 @@ public class InServiceImpl implements InService {
 		return datemap;
 	}
 
-	public int insert(In In,Wm wm,Position p ) {
-		
+	public int insert(In In, Wm wm, Position p) {
+
 		wmMapper.updateByPrimaryKey(wm);
 		pMapper.updateByPrimaryKey(p);
 		return inMapper.insertSelective(In);
 	}
 
-	public int update(In in) {
-//		
+	public int update(In in,String state) {
+		
+		Out out = new Out();
+		if(state.equals("1")){
+			out.setOutId("Out"+in.getInId());
+			out.setState(2L);
+			outMapper.insertSelective(out);
+		}
 		Wm wm = wmMapper.selectByWmId(in.getWmId());
-		
-
 		Position p = pMapper.selectByPId(in.getpId());
-		wm.setWmCount(wm.getWmCount()+in.getWmCount());
-		p.setpCount(p.getpCount()+in.getpCount());
-		
+		wm.setWmCount(wm.getWmCount() + in.getWmCount());
+		p.setpCount(p.getpCount() + in.getpCount());
+
 		wmMapper.updateByPrimaryKey(wm);
 		pMapper.updateByPrimaryKey(p);
-		
+
 		return inMapper.updateByPrimaryKeySelective(in);
 	}
 
 	public int delete(Long id) {
 		In in = inMapper.selectByPrimaryKey(id);
-		Wm wm = wmMapper.selectByWmId(in.getWmId());
-		Position p = pMapper.selectByPId(in.getpId());
-		wm.setWmCount(wm.getWmCount()+in.getWmCount());
-		p.setpCount(p.getpCount()+in.getpCount());
+		System.out.println(in.getState()+"state:");
+		System.out.println(in.getState()+"state:");
+		System.out.println(in.getState()+"state:");
+		System.out.println(in.getState()+"state:");
+		System.out.println(in.getState()+"state:");
+			Wm wm = wmMapper.selectByWmId(in.getWmId());
+			Position p = pMapper.selectByPId(in.getpId());
+			wm.setWmCount(wm.getWmCount() + in.getWmCount());
+			p.setpCount(p.getpCount() + in.getpCount());
+
+			wmMapper.updateByPrimaryKey(wm);
+			pMapper.updateByPrimaryKey(p);
 		
-		wmMapper.updateByPrimaryKey(wm);
-		pMapper.updateByPrimaryKey(p);
 		return inMapper.deleteByPrimaryKey(id);
 	}
 

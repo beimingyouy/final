@@ -18,15 +18,15 @@
 			<table cellpadding="5">
 				<tr>
 					<td>id：</td>
-					<td>${in.id}</td>
+					<td>${out.id}</td>
 				</tr>
 				<tr>
-					<td>入库单编号：</td>
-					<td>${in.inId}</td>
+					<td>出库单编号：</td>
+					<td>${out.outId}</td>
 				</tr>
 
 				<tr>
-					<td>仓储资源类型：</td>
+					<td>车辆资源类型：</td>
 					<td>${in.wmId}</td>
 				</tr>
 				<tr>

@@ -1,0 +1,12 @@
+[DEBUG] [2016-04-25 17:10:07][org.springframework.web.context.support.StandardServletEnvironment]Adding [servletConfigInitParams] PropertySource with lowest search precedence
+[DEBUG] [2016-04-25 17:10:07][org.springframework.web.context.support.StandardServletEnvironment]Adding [servletContextInitParams] PropertySource with lowest search precedence
+[DEBUG] [2016-04-25 17:10:07][org.springframework.web.context.support.StandardServletEnvironment]Adding [jndiProperties] PropertySource with lowest search precedence
+[DEBUG] [2016-04-25 17:10:07][org.springframework.web.context.support.StandardServletEnvironment]Adding [systemProperties] PropertySource with lowest search precedence
+[DEBUG] [2016-04-25 17:10:07][org.springframework.web.context.support.StandardServletEnvironment]Adding [systemEnvironment] PropertySource with lowest search precedence
+[DEBUG] [2016-04-25 17:10:07][org.springframework.web.context.support.StandardServletEnvironment]Initialized StandardServletEnvironment with PropertySources [servletConfigInitParams,servletContextInitParams,jndiProperties,systemProperties,systemEnvironment]
+[DEBUG] [2016-04-25 17:10:07][org.springframework.web.context.support.StandardServletEnvironment]Adding [servletConfigInitParams] PropertySource with lowest search precedence
+[DEBUG] [2016-04-25 17:10:07][org.springframework.web.context.support.StandardServletEnvironment]Adding [servletContextInitParams] PropertySource with lowest search precedence
+[DEBUG] [2016-04-25 17:10:07][org.springframework.web.context.support.StandardServletEnvironment]Adding [jndiProperties] PropertySource with lowest search precedence
+[DEBUG] [2016-04-25 17:10:07][org.springframework.web.context.support.StandardServletEnvironment]Adding [systemProperties] PropertySource with lowest search precedence
+[DEBUG] [2016-04-25 17:10:07][org.springframework.web.context.support.StandardServletEnvironment]Adding [systemEnvironment] PropertySource with lowest search precedence
+[DEBUG] [2016-04-25 17:10:07][org.springframework.web.context.support.StandardServletEnvironment]Initialized StandardServletEnvironment with PropertySources [servletConfigInitParams,servletContextInitParams,jndiProperties,systemProperties,systemEnvironment]

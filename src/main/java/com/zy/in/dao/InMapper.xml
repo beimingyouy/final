@@ -70,6 +70,7 @@
 			<if test="updateTime != null">
 				UPDATE_TIME,
 			</if>
+			STATE
 			
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -97,6 +98,7 @@
 			<if test="updateTime != null">
 				#{updateTime,jdbcType=DATE},
 			</if>
+			2
 			
 		</trim>
 	</insert>
@@ -124,9 +126,9 @@
 			<if test="createTime != null">
 				CREATE_TIME = #{createTime,jdbcType=DATE},
 			</if>
-			<if test="updateTime != null">
-				UPDATE_TIME = #{updateTime,jdbcType=DATE},
-			</if>
+		
+				UPDATE_TIME = sysdate,
+			
 			<if test="state != null">
 				STATE = #{state,jdbcType=DATE},
 			</if>
@@ -176,6 +178,6 @@
 		WHERE rownum &lt;= #{end,jdbcType=DECIMAL}
 		) B
 		WHERE r
-		&gt;#{start,jdbcType=DECIMAL} order by ID
+		&gt;#{start,jdbcType=DECIMAL} order by CREATE_TIME desc
 	</select>
 </mapper>

@@ -12,10 +12,9 @@ public interface InService {
 
 	public Map<String, Object> queryAll(int rows,int page,In in);
 
-	public int insert(In In,Wm wm,Position p);
-	
+	public int insert(In In,Wm wm,Position p);	
 
-	public int update(In In);
+	public int update(In In,String state);
 
 	public int delete(Long long1);
 
