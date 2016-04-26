@@ -22,4 +22,6 @@ public interface WmMapper {
     List<Wm> queryAll(@Param("start")int start,@Param("end")int end,@Param("wmId")String wmId);
 
 	Integer getTotal(@Param("wmId")String wmId);
+
+	List<Wm> wmType();
 }

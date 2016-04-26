@@ -46,9 +46,9 @@ public class InServiceImpl implements InService {
 	}
 
 	@Override
-	public Car selectByPrimaryKey(Long id) {
+	public In selectByPrimaryKey(Long id) {
 
-		return CarMapper.selectByPrimaryKey(id);
+		return inMapper.selectByPrimaryKey(id);
 	}
 
 }

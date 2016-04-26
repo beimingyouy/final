@@ -1,146 +1,158 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.zy.in.dao.InMapper" >
-  <resultMap id="BaseResultMap" type="com.zy.in.entities.In" >
-    <id column="ID" property="id" jdbcType="DECIMAL" />
-    <result column="IN_ID" property="inId" jdbcType="VARCHAR" />
-    <result column="IN_NOTE" property="inNote" jdbcType="VARCHAR" />
-    <result column="WM_ID" property="wmId" jdbcType="DECIMAL" />
-    <result column="WM_COUNT" property="wmCount" jdbcType="DECIMAL" />
-    <result column="P_ID" property="pId" jdbcType="DECIMAL" />
-    <result column="P_COUNT" property="pCount" jdbcType="DECIMAL" />
-    <result column="CREATE_TIME" property="createTime" jdbcType="DATE" />
-    <result column="UPDATE_TIME" property="updateTime" jdbcType="DATE" />
-  </resultMap>
-  <sql id="Base_Column_List" >
-    ID, IN_ID, IN_NOTE, WM_ID, WM_COUNT, P_ID, P_COUNT, CREATE_TIME, UPDATE_TIME
-  </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.math.BigDecimal" >
-    select 
-    <include refid="Base_Column_List" />
-    from T_IN
-    where ID = #{id,jdbcType=DECIMAL}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.math.BigDecimal" >
-    delete from T_IN
-    where ID = #{id,jdbcType=DECIMAL}
-  </delete>
-  <insert id="insert" parameterType="com.zy.in.entities.In" >
-    insert into T_IN (ID, IN_ID, IN_NOTE, 
-      WM_ID, WM_COUNT, P_ID, 
-      P_COUNT, CREATE_TIME, UPDATE_TIME
-      )
-    values (#{id,jdbcType=DECIMAL}, #{inId,jdbcType=VARCHAR}, #{inNote,jdbcType=VARCHAR}, 
-      #{wmId,jdbcType=DECIMAL}, #{wmCount,jdbcType=DECIMAL}, #{pId,jdbcType=DECIMAL}, 
-      #{pCount,jdbcType=DECIMAL}, #{createTime,jdbcType=DATE}, #{updateTime,jdbcType=DATE}
-      )
-  </insert>
-  <insert id="insertSelective" parameterType="com.zy.in.entities.In" >
-    insert into T_IN
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        ID,
-      </if>
-      <if test="inId != null" >
-        IN_ID,
-      </if>
-      <if test="inNote != null" >
-        IN_NOTE,
-      </if>
-      <if test="wmId != null" >
-        WM_ID,
-      </if>
-      <if test="wmCount != null" >
-        WM_COUNT,
-      </if>
-      <if test="pId != null" >
-        P_ID,
-      </if>
-      <if test="pCount != null" >
-        P_COUNT,
-      </if>
-      <if test="createTime != null" >
-        CREATE_TIME,
-      </if>
-      <if test="updateTime != null" >
-        UPDATE_TIME,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=DECIMAL},
-      </if>
-      <if test="inId != null" >
-        #{inId,jdbcType=VARCHAR},
-      </if>
-      <if test="inNote != null" >
-        #{inNote,jdbcType=VARCHAR},
-      </if>
-      <if test="wmId != null" >
-        #{wmId,jdbcType=DECIMAL},
-      </if>
-      <if test="wmCount != null" >
-        #{wmCount,jdbcType=DECIMAL},
-      </if>
-      <if test="pId != null" >
-        #{pId,jdbcType=DECIMAL},
-      </if>
-      <if test="pCount != null" >
-        #{pCount,jdbcType=DECIMAL},
-      </if>
-      <if test="createTime != null" >
-        #{createTime,jdbcType=DATE},
-      </if>
-      <if test="updateTime != null" >
-        #{updateTime,jdbcType=DATE},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.zy.in.entities.In" >
-    update T_IN
-    <set >
-      <if test="inId != null" >
-        IN_ID = #{inId,jdbcType=VARCHAR},
-      </if>
-      <if test="inNote != null" >
-        IN_NOTE = #{inNote,jdbcType=VARCHAR},
-      </if>
-      <if test="wmId != null" >
-        WM_ID = #{wmId,jdbcType=DECIMAL},
-      </if>
-      <if test="wmCount != null" >
-        WM_COUNT = #{wmCount,jdbcType=DECIMAL},
-      </if>
-      <if test="pId != null" >
-        P_ID = #{pId,jdbcType=DECIMAL},
-      </if>
-      <if test="pCount != null" >
-        P_COUNT = #{pCount,jdbcType=DECIMAL},
-      </if>
-      <if test="createTime != null" >
-        CREATE_TIME = #{createTime,jdbcType=DATE},
-      </if>
-      <if test="updateTime != null" >
-        UPDATE_TIME = #{updateTime,jdbcType=DATE},
-      </if>
-    </set>
-    where ID = #{id,jdbcType=DECIMAL}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.zy.in.entities.In" >
-    update T_IN
-    set IN_ID = #{inId,jdbcType=VARCHAR},
-      IN_NOTE = #{inNote,jdbcType=VARCHAR},
-      WM_ID = #{wmId,jdbcType=DECIMAL},
-      WM_COUNT = #{wmCount,jdbcType=DECIMAL},
-      P_ID = #{pId,jdbcType=DECIMAL},
-      P_COUNT = #{pCount,jdbcType=DECIMAL},
-      CREATE_TIME = #{createTime,jdbcType=DATE},
-      UPDATE_TIME = #{updateTime,jdbcType=DATE}
-    where ID = #{id,jdbcType=DECIMAL}
-  </update>
-  
-    
-    <select id="getTotal" resultType="INTEGER">
+<mapper namespace="com.zy.in.dao.InMapper">
+	<resultMap id="BaseResultMap" type="com.zy.in.entities.In">
+		<id column="ID" property="id" jdbcType="DECIMAL" />
+		<result column="IN_ID" property="inId" jdbcType="VARCHAR" />
+		<result column="IN_NOTE" property="inNote" jdbcType="VARCHAR" />
+		<result column="WM_ID" property="wmId" jdbcType="DECIMAL" />
+		<result column="WM_COUNT" property="wmCount" jdbcType="DECIMAL" />
+		<result column="P_ID" property="pId" jdbcType="DECIMAL" />
+		<result column="P_COUNT" property="pCount" jdbcType="DECIMAL" />
+		<result column="CREATE_TIME" property="createTime" jdbcType="DATE" />
+		<result column="UPDATE_TIME" property="updateTime" jdbcType="DATE" />
+		<result column="STATE" property="state" jdbcType="DECIMAL" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		ID, IN_ID, IN_NOTE, WM_ID, WM_COUNT, P_ID, P_COUNT, CREATE_TIME,
+		UPDATE_TIME,STATE
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from T_IN
+		where ID = #{id,jdbcType=DECIMAL}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from T_IN
+		where ID = #{id,jdbcType=DECIMAL}
+	</delete>
+	<insert id="insert" parameterType="com.zy.in.entities.In">
+		insert into T_IN (ID, IN_ID, IN_NOTE,
+		WM_ID, WM_COUNT, P_ID,
+		P_COUNT, CREATE_TIME, UPDATE_TIME
+		)
+		values (#{id,jdbcType=DECIMAL}, #{inId,jdbcType=VARCHAR},
+		#{inNote,jdbcType=VARCHAR},
+		#{wmId,jdbcType=DECIMAL}, #{wmCount,jdbcType=DECIMAL}, #{pId,jdbcType=DECIMAL},
+		#{pCount,jdbcType=DECIMAL}, #{createTime,jdbcType=DATE},
+		#{updateTime,jdbcType=DATE}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.zy.in.entities.In">
+		insert into T_IN
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				ID,
+			</if>
+			<if test="inId != null">
+				IN_ID,
+			</if>
+			<if test="inNote != null">
+				IN_NOTE,
+			</if>
+			<if test="wmId != null">
+				WM_ID,
+			</if>
+			<if test="wmCount != null">
+				WM_COUNT,
+			</if>
+			<if test="pId != null">
+				P_ID,
+			</if>
+			<if test="pCount != null">
+				P_COUNT,
+			</if>
+			<if test="createTime != null">
+				CREATE_TIME,
+			</if>
+			<if test="updateTime != null">
+				UPDATE_TIME,
+			</if>
+			STATE
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=DECIMAL},
+			</if>
+			<if test="inId != null">
+				#{inId,jdbcType=VARCHAR},
+			</if>
+			<if test="inNote != null">
+				#{inNote,jdbcType=VARCHAR},
+			</if>
+			<if test="wmId != null">
+				#{wmId,jdbcType=DECIMAL},
+			</if>
+			<if test="wmCount != null">
+				#{wmCount,jdbcType=DECIMAL},
+			</if>
+			<if test="pId != null">
+				#{pId,jdbcType=DECIMAL},
+			</if>
+			<if test="pCount != null">
+				#{pCount,jdbcType=DECIMAL},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=DATE},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime,jdbcType=DATE},
+			</if>
+			<if test="state != null">
+				#{state,jdbcType=DATE},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.zy.in.entities.In">
+		update T_IN
+		<set>
+			<if test="inId != null">
+				IN_ID = #{inId,jdbcType=VARCHAR},
+			</if>
+			<if test="inNote != null">
+				IN_NOTE = #{inNote,jdbcType=VARCHAR},
+			</if>
+			<if test="wmId != null">
+				WM_ID = #{wmId,jdbcType=DECIMAL},
+			</if>
+			<if test="wmCount != null">
+				WM_COUNT = #{wmCount,jdbcType=DECIMAL},
+			</if>
+			<if test="pId != null">
+				P_ID = #{pId,jdbcType=DECIMAL},
+			</if>
+			<if test="pCount != null">
+				P_COUNT = #{pCount,jdbcType=DECIMAL},
+			</if>
+			<if test="createTime != null">
+				CREATE_TIME = #{createTime,jdbcType=DATE},
+			</if>
+			<if test="updateTime != null">
+				UPDATE_TIME = #{updateTime,jdbcType=DATE},
+			</if>
+			<if test="state != null">
+				STATE = #{state,jdbcType=DATE},
+			</if>
+		</set>
+		where ID = #{id,jdbcType=DECIMAL}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.zy.in.entities.In">
+		update T_IN
+		set IN_ID = #{inId,jdbcType=VARCHAR},
+		IN_NOTE = #{inNote,jdbcType=VARCHAR},
+		WM_ID = #{wmId,jdbcType=DECIMAL},
+		WM_COUNT = #{wmCount,jdbcType=DECIMAL},
+		P_ID = #{pId,jdbcType=DECIMAL},
+		P_COUNT = #{pCount,jdbcType=DECIMAL},
+		CREATE_TIME = #{createTime,jdbcType=DATE},
+		UPDATE_TIME = #{updateTime,jdbcType=DATE}
+		where ID = #{id,jdbcType=DECIMAL}
+	</update>
+
+
+	<select id="getTotal" resultType="INTEGER">
 		select
 		count(*)
 		from (
@@ -149,7 +161,7 @@
 			<if test="inId!=null and inId != ''">
 				AND IN_ID like '%' || #{inId,jdbcType=VARCHAR} || '%'
 			</if>
-			
+
 		</where>
 		)
 	</select>
@@ -168,6 +180,7 @@
 		)A
 		WHERE rownum &lt;= #{end,jdbcType=DECIMAL}
 		) B
-		WHERE r &gt;#{start,jdbcType=DECIMAL} order by ID
+		WHERE r
+		&gt;#{start,jdbcType=DECIMAL} order by ID
 	</select>
 </mapper>

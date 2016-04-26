@@ -1,6 +1,8 @@
 package com.zy.wm.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -106,6 +108,13 @@ public class WmController {
 		}
 
 		return map;
+	}
+	
+	@RequestMapping(value="/wmType",method = RequestMethod.POST)
+	public @ResponseBody List<Wm> wmType(){
+		List<Wm> list  =  new ArrayList<Wm>();
+		list = wmService.wmType();
+		return list;
 	}
 
 }

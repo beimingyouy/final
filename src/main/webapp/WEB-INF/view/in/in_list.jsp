@@ -28,7 +28,7 @@
 		var toolbar =  new Array();
 		$(function(){
 			var toolbar = [
-		              {id:"add", 		text:"添加车辆资源",		iconCls:'icon-add',
+		              {id:"add", 		text:"入库单申请",		iconCls:'icon-add',
 		          	   handler: 		function(){
 		          		   					demo_add();
 		          		   				}},
@@ -93,6 +93,34 @@
 				align : 'center',
 				width : 150
 			}, {
+				field : 'state',
+				title : '审核状态',
+				align : 'center',
+				width : 80,
+				
+				styler: function(value,row,index){
+					if (value == 1){
+						
+						return 'color:red;';
+					}else if(value == 0){
+						return 'color:blue';
+					}
+					else{
+						return;
+					}},
+					formatter: function(value,row,index){
+						if (value==1){
+							return "审核成功";
+						} else if(value==0){
+							return "审核失败";
+						}else{
+							return "待审核";
+						}
+					}
+
+
+			
+			}, {
 				field : 'createTime',
 				title : '入库单创建时间',
 				align : 'center',
@@ -101,6 +129,9 @@
 					if (value != null) {
 						console.log(value);
 						var date = new Date(value);
+						console.log(date.getFullYear() + '-' + (date.getMonth() + 1) + '-'
+								+ date.getDate()+" "+date.getHours() +":"+date.getMinutes()+":"+date.getMinutes());
+						
 						return date.getFullYear() + '-' + (date.getMonth() + 1) + '-'
 						+ date.getDate()+" "+date.getHours() +":"+date.getMinutes()+":"+date.getMinutes();
 						}
@@ -130,10 +161,10 @@
 		function view(id) {
 			win = $('<div/>').dialog({
 				title : '查看',
-				width : 600,
-				height : 400,
+				width : 800,
+				height : 600,
 				modal : true,
-				href : '<%=path%>/car/view?id=' + id,
+				href : '<%=path%>/in/view?id=' + id,
 			onClose : function() {
 				demo_window_close();
 			}
@@ -148,7 +179,7 @@
 			width:600,
 			height:400,
 			modal:true,
-			href:'<%=path%>/car/toAdd',
+			href:'<%=path%>/in/toAdd',
 			onClose:function(){
 				demo_window_close();
 			}
@@ -189,39 +220,39 @@
 			}
 		}
 	
-		var url = '<%=path%>/car/toDelete?ids='+ids;
+		var url = '<%=path%>/car/toDelete?ids=' + ids;
 		$.messager.confirm('确认', '您是否要删除？', function(r) {
 			if (r) {
-			$.post(url,ids,function(json){
-				var flag = json.flag;
-				var msg = json.msg;
-				if(flag == "false"){
-					$.messager.alert("错误提示", "删除失败", "error",
-						function() {
+				$.post(url, ids, function(json) {
+					var flag = json.flag;
+					var msg = json.msg;
+					if (flag == "false") {
+						$.messager.alert("错误提示", "删除失败", "error", function() {
 						})
-				}
-				else{
-					$.messager.alert("提示", "删除成功", "info", 
-						function() {}
-					)
+					} else {
+						$.messager.alert("提示", "删除成功", "info", function() {
+						})
 
-					$("#demo_datagrid").datagrid("reload");
-				}
-			},'json')
+						$("#demo_datagrid").datagrid("reload");
+					}
+				}, 'json')
 			}
-			})
-		}
+		})
+	}
 	//条件查询
 	function demoSearch() {
-		$('#demo_datagrid').datagrid('load', {carId:$('#carId').val()});		
+		$('#demo_datagrid').datagrid('load', {
+			carId : $('#carId').val()
+		});
 	}
 
 	//重置
 	function demoReset() {
 		$('#demo_list_form').form('reset');
-		$('#demo_datagrid').datagrid('load', {pId:$('#carId').val()});
+		$('#demo_datagrid').datagrid('load', {
+			pId : $('#carId').val()
+		});
 	}
-
 
 	//销毁窗口
 	function demo_window_close() {
@@ -236,8 +267,6 @@
 			slowType : 'slide'
 		});
 	}
-
-		
 </script>
 </head>
 <body>

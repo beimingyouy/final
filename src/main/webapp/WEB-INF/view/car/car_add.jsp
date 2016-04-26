@@ -36,6 +36,7 @@
 				<td><input class="easyui-validatebox" type="text" name="carCount"
 					id="carCount" data-options=" required:true" /></td>
 			</tr>
+			
 
 			<tr>
 				<td><a id="sava_btn" href="javascript:void(0)"
@@ -64,6 +65,7 @@
 				});
 			   return ; 
 		}
+		
 		
 		 var isValid = $('#demo_add_form').form('validate'); 
 	       if(isValid==false){

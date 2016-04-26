@@ -1,6 +1,8 @@
 package com.zy.position.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.zy.position.entities.Position;
 import com.zy.position.services.PositionService;
 import com.zy.position.view.View;
+import com.zy.wm.entities.Wm;
 
 @Controller
 @RequestMapping("/position")
@@ -108,5 +111,10 @@ public class PositionController {
 
 		return map;
 	}
-
+	@RequestMapping(value="/pType",method = RequestMethod.POST)
+	public @ResponseBody List<Position> wmType(){
+		List<Position> list  =  new ArrayList<Position>();
+		list = PositionService.pType();
+		return list;
+	}
 }

@@ -1,4 +1,5 @@
 package com.zy.position.services;
+import java.util.List;
 import java.util.Map;
 
 import com.zy.position.entities.Position;
@@ -15,5 +16,7 @@ public interface PositionService {
 	public int update(Position Position);
 
 	public int delete(Long long1);
+
+	public List<Position> pType();
 
 }

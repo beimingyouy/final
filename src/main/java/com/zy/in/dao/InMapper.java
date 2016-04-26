@@ -1,11 +1,11 @@
 package com.zy.in.dao;
 
-import com.zy.car.entities.Car;
-import com.zy.in.entities.In;
 import java.math.BigDecimal;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
+
+import com.zy.in.entities.In;
 
 public interface InMapper {
     int deleteByPrimaryKey(BigDecimal id);
@@ -14,7 +14,7 @@ public interface InMapper {
 
     int insertSelective(In record);
 
-    In selectByPrimaryKey(BigDecimal id);
+    In selectByPrimaryKey(Long id);
 
     int updateByPrimaryKeySelective(In record);
 

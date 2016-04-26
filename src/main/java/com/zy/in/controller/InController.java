@@ -49,14 +49,15 @@ public class InController {
 
 	@RequestMapping(value = "/view", method = RequestMethod.GET)
 	public String view(Model model, Long id) {
-		Car car = CarService.selectByPrimaryKey(id);
-		model.addAttribute("car", car);
+		In in = inService.selectByPrimaryKey(id);
+		model.addAttribute("in", in);
 		return View.in.IN_VIEW;
 	}
+	
 
 	@RequestMapping(value = "/toAdd", method = RequestMethod.GET)
 	public String addView() {
-		return View.in.IN_VIEW;
+		return View.in.IN_ADD;
 	}
 
 	@RequestMapping(value = "/submit", method = RequestMethod.POST)

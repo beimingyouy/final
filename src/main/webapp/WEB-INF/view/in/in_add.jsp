@@ -13,29 +13,57 @@
 <base href="<%=basePath%>">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 </head>
+
 <body>
+<script type="text/javascript">
+
+$(function(){
+	$('#wm').combobox({    
+    url:'<%=path%>/wm/wmType',    
+    valueField:'wmId',    
+    textField:'wmName',
+    editable:false 
+});
+	$('#p').combobox({    
+	    url:'<%=path%>/position/pType',    
+	    valueField:'pId',    
+	    textField:'pName',
+	    editable:false 
+	});
+	
+	});
+ </script>
 	<form id="demo_add_form">
 		<table cellpadding="5">
 			<tr>
-				<td>车辆编号:</td>
-				<td><input class="easyui-validatebox" type="text" name="carId"
-					id="carId" data-options=" required:true" /></td>
+				<td>入库单编号:</td>
+				<td><input class="easyui-validatebox" type="text" name="inId"
+					id="inId" data-options=" required:true" /></td>
 			</tr>
 			<tr>
-				<td>车辆名称:</td>
-				<td><input class="easyui-validatebox" type="text" name="carName"
-					id="carName" data-options=" required:true" /></td>
+				<td>仓储资源选择:</td>
+				<td><input id="wm" name="wm" value="请选择仓储资源"></td>
 			</tr>
 			<tr>
-				<td>车辆总数目:</td>
-				<td><input class="easyui-validatebox" type="text" name="carAll"
-					id="carAll" data-options=" required:true" /></td>
+				<td>占用数量:</td>
+				<td><input class="easyui-validatebox" type="text"
+					name="wmCount" id="carAll" data-options=" required:true" /></td>
 			</tr>
 			<tr>
-				<td>车辆可用数目:</td>
-				<td><input class="easyui-validatebox" type="text" name="carCount"
-					id="carCount" data-options=" required:true" /></td>
+				<td>仓位选择:</td>
+				<td><input id="p" name="p" value="请选择仓位资源"></td>
 			</tr>
+			<tr>
+				<td>占用位置:</td>
+				<td><input class="easyui-validatebox" type="text" name="pCount"
+					id="pCount" data-options=" required:true" /></td>
+			</tr>
+			<tr>
+				<td>备注:</td>
+				<td><input class="easyui-validatebox" type="text" name="inNote"
+					id="inNote" data-options=" required:true" /></td>
+			</tr>
+
 
 			<tr>
 				<td><a id="sava_btn" href="javascript:void(0)"
@@ -52,9 +80,12 @@
 	function formreset(){
 		$("#demo_add_form").form("reset");
 		
+		
+		
 	}
 	//提交添加
 	function add_demo_submit(){
+		var wmtype = $('#wm').combobox('getValue');
 		var count = $("#carCount").val();
 		var all = $("#carAll").val();
 		if(all<count){

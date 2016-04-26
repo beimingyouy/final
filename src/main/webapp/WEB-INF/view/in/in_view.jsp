@@ -13,24 +13,48 @@
 			<table cellpadding="5">
 				<tr>
 					<td>id：</td>
-					<td>${car.id}</td>
+					<td>${in.id}</td>
 				</tr>
 				<tr>
-					<td>车辆编号：</td>
-					<td>${car.carId}</td>
+					<td>入库单编号：</td>
+					<td>${in.inId}</td>
+				</tr>
+
+				<tr>
+					<td>仓储资源类型：</td>
+					<td>${in.wmId}</td>
 				</tr>
 				<tr>
-					<td>车辆名称：</td>
-					<td>${car.carName}</td>
+					<td>占用仓储资源数目：</td>
+					<td>${in.wmCount}</td>
 				</tr>
 				<tr>
-					<td>可用车辆数：</td>
-					<td>${car.carCount}</td>
+					<td>仓位资源类型：</td>
+					<td>${in.wmId}</td>
 				</tr>
 				<tr>
-					<td>总车辆数：</td>
-					<td>${car.carAll}</td>
+					<td>占用仓位资源数目：</td>
+					<td>${in.wmCount}</td>
 				</tr>
+				<tr>
+					<td>备注：</td>
+					<td>${in.inNote}</td>
+				</tr>
+				<tr>
+					<td>审核状态：</td>
+					<c:choose>
+						<c:when test="${in.state==1 }">
+							<td style="color: red">审核成功</td>
+						</c:when>
+						<c:when test="${in.state==0 }">
+							<td style="color: blue">审核失败</td>
+						</c:when>
+						<c:when test="${in.state==2 }">
+							<td style="color: blue">等待审核</td>
+						</c:when>
+					</c:choose>
+				</tr>
+
 			</table>
 
 		</form>

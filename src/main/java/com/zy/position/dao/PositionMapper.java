@@ -22,4 +22,6 @@ public interface PositionMapper {
     List<Position> queryAll(@Param("start")int start,@Param("end")int end,@Param("pId")String pId);
 
    	Integer getTotal(@Param("pId")String pId);
+   	
+   	List<Position> pType();
 }

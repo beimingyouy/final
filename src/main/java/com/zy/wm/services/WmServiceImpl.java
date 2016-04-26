@@ -1,6 +1,7 @@
 package com.zy.wm.services;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,5 +44,9 @@ public class WmServiceImpl implements WmService {
 		
 		return WmMapper.selectByPrimaryKey(id);
 	}
-
+	@Override
+	public List<Wm> wmType() {
+		
+		return WmMapper.wmType();
+	}
 }

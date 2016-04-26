@@ -7,7 +7,7 @@ import com.zy.in.entities.In;
 
 public interface InService {
 
-	public Car selectByPrimaryKey(Long id);
+	public In selectByPrimaryKey(Long id);
 
 	public Map<String, Object> queryAll(int rows,int page,In in);
 

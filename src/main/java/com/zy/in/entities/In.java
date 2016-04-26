@@ -4,93 +4,103 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 public class In {
-    private BigDecimal id;
+	private BigDecimal id;
 
-    private String inId;
+	private String inId;
 
-    private String inNote;
+	private String inNote;
 
-    private BigDecimal wmId;
+	private BigDecimal wmId;
 
-    private BigDecimal wmCount;
+	private BigDecimal wmCount;
 
-    private BigDecimal pId;
+	private BigDecimal pId;
 
-    private BigDecimal pCount;
+	private BigDecimal pCount;
 
-    private Date createTime;
+	private Date createTime;
 
-    private Date updateTime;
+	private Date updateTime;
 
-    public BigDecimal getId() {
-        return id;
-    }
+	private Long state;
 
-    public void setId(BigDecimal id) {
-        this.id = id;
-    }
+	public Long getState() {
+		return state;
+	}
 
-    public String getInId() {
-        return inId;
-    }
+	public void setState(Long state) {
+		this.state = state;
+	}
 
-    public void setInId(String inId) {
-        this.inId = inId == null ? null : inId.trim();
-    }
+	public BigDecimal getId() {
+		return id;
+	}
 
-    public String getInNote() {
-        return inNote;
-    }
+	public void setId(BigDecimal id) {
+		this.id = id;
+	}
 
-    public void setInNote(String inNote) {
-        this.inNote = inNote == null ? null : inNote.trim();
-    }
+	public String getInId() {
+		return inId;
+	}
 
-    public BigDecimal getWmId() {
-        return wmId;
-    }
+	public void setInId(String inId) {
+		this.inId = inId == null ? null : inId.trim();
+	}
 
-    public void setWmId(BigDecimal wmId) {
-        this.wmId = wmId;
-    }
+	public String getInNote() {
+		return inNote;
+	}
 
-    public BigDecimal getWmCount() {
-        return wmCount;
-    }
+	public void setInNote(String inNote) {
+		this.inNote = inNote == null ? null : inNote.trim();
+	}
 
-    public void setWmCount(BigDecimal wmCount) {
-        this.wmCount = wmCount;
-    }
+	public BigDecimal getWmId() {
+		return wmId;
+	}
 
-    public BigDecimal getpId() {
-        return pId;
-    }
+	public void setWmId(BigDecimal wmId) {
+		this.wmId = wmId;
+	}
 
-    public void setpId(BigDecimal pId) {
-        this.pId = pId;
-    }
+	public BigDecimal getWmCount() {
+		return wmCount;
+	}
 
-    public BigDecimal getpCount() {
-        return pCount;
-    }
+	public void setWmCount(BigDecimal wmCount) {
+		this.wmCount = wmCount;
+	}
 
-    public void setpCount(BigDecimal pCount) {
-        this.pCount = pCount;
-    }
+	public BigDecimal getpId() {
+		return pId;
+	}
 
-    public Date getCreateTime() {
-        return createTime;
-    }
+	public void setpId(BigDecimal pId) {
+		this.pId = pId;
+	}
 
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
+	public BigDecimal getpCount() {
+		return pCount;
+	}
 
-    public Date getUpdateTime() {
-        return updateTime;
-    }
+	public void setpCount(BigDecimal pCount) {
+		this.pCount = pCount;
+	}
 
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
+	public Date getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
+
+	public Date getUpdateTime() {
+		return updateTime;
+	}
+
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
+	}
 }

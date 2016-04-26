@@ -182,7 +182,7 @@
 	//重置
 	function demoReset() {
 		$('#demo_list_form').form('reset');
-		$('#demo_datagrid').datagrid('load', {pId:$('#carId').val()});
+		$('#demo_datagrid').datagrid('load', {carId:$('#carId').val()});
 	}
 
 
@@ -211,7 +211,7 @@
 				<table cellpadding="0" cellspacing="1" class="formtable">
 					<tr>
 						<td align="center" width="10%">车辆编号</td>
-						<td class="value" width="20%"><input id="pId" name="pId"
+						<td class="value" width="20%"><input id="carId" name="carId"
 							class="easyui-validatebox"></td>
 						</td>
 						<td colspan="2" align="center" class="value" width="40%"><a
