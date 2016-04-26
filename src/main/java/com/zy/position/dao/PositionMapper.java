@@ -24,4 +24,6 @@ public interface PositionMapper {
    	Integer getTotal(@Param("pId")String pId);
    	
    	List<Position> pType();
+
+	Position selectByPId(String pId);
 }

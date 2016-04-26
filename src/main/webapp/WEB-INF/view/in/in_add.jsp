@@ -17,21 +17,7 @@
 <body>
 <script type="text/javascript">
 
-$(function(){
-	$('#wm').combobox({    
-    url:'<%=path%>/wm/wmType',    
-    valueField:'wmId',    
-    textField:'wmName',
-    editable:false 
-});
-	$('#p').combobox({    
-	    url:'<%=path%>/position/pType',    
-	    valueField:'pId',    
-	    textField:'pName',
-	    editable:false 
-	});
-	
-	});
+
  </script>
 	<form id="demo_add_form">
 		<table cellpadding="5">
@@ -42,21 +28,21 @@ $(function(){
 			</tr>
 			<tr>
 				<td>仓储资源选择:</td>
-				<td><input id="wm" name="wm" value="请选择仓储资源"></td>
+				<td><input id="wmId" name="wmId" value="请选择仓储资源"></td>
 			</tr>
 			<tr>
 				<td>占用数量:</td>
 				<td><input class="easyui-validatebox" type="text"
-					name="wmCount" id="carAll" data-options=" required:true" /></td>
+					name="wmCount" id="wmCount" data-options=" required:true" validtype="zipcode" /></td>
 			</tr>
 			<tr>
 				<td>仓位选择:</td>
-				<td><input id="p" name="p" value="请选择仓位资源"></td>
+				<td><input id="pId" name="pId" value="请选择仓位资源"></td>
 			</tr>
 			<tr>
 				<td>占用位置:</td>
 				<td><input class="easyui-validatebox" type="text" name="pCount"
-					id="pCount" data-options=" required:true" /></td>
+					id="pCount" data-options=" required:true"  validtype="zipcode"/></td>
 			</tr>
 			<tr>
 				<td>备注:</td>
@@ -77,6 +63,39 @@ $(function(){
 		</table>
 	</form>
 	<script>	
+	
+	$(function(){
+		
+		
+		$('#wmId').combobox({    
+		    url:'<%=path%>/wm/wmType',    
+		    valueField:'wmId',    
+		    textField:'wmName',
+		    editable:false 
+		});	
+		
+		
+		$('#pId').combobox({    
+		    url:'<%=path%>/position/pType',    
+		    valueField:'pId',    
+		    textField:'pName',
+		    editable:false 
+		});
+		
+		
+		});
+	$.extend($.fn.validatebox.defaults.rules, {
+	    
+	    zipcode: {
+	        validator: function (value) {
+	            var reg = /^[1-9]\d{0,5}$/;
+	            return reg.test(value);
+	        },
+	        message: '只允许输入1-6位的数字.'
+	    },
+
+	  
+	});
 	function formreset(){
 		$("#demo_add_form").form("reset");
 		
@@ -85,27 +104,17 @@ $(function(){
 	}
 	//提交添加
 	function add_demo_submit(){
-		var wmtype = $('#wm').combobox('getValue');
-		var count = $("#carCount").val();
-		var all = $("#carAll").val();
-		if(all<count){
-			   $.messager.alert("错误提示", "可用数量大于总数量！" , "error",
-						function() {
-				   
-				});
-			   return ; 
-		}
 		
 		 var isValid = $('#demo_add_form').form('validate'); 
 	       if(isValid==false){
-	    	   $.messager.alert("错误提示", "您有必填内容为填写" , "error",
+	    	   $.messager.alert("错误提示", "您有内容填写错误 TAT" , "error",
 						function() {
 				})
 	           return ;
 	       }
 	       
 		var formdate = $('#demo_add_form').serializeArray();
-		var url = '<%=path%>/car/submit';
+		var url = '<%=path%>/in/submit';
 			$.post(url, formdate, function(json) {				
 				var flag = json.flag;
 				var msg = json.msg;

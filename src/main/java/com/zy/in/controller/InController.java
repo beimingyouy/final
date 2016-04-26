@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,18 +18,27 @@ import com.zy.car.services.CarService;
 import com.zy.in.entities.In;
 import com.zy.in.services.InService;
 import com.zy.in.view.View;
+import com.zy.position.entities.Position;
+import com.zy.position.services.PositionService;
+import com.zy.wm.entities.Wm;
+import com.zy.wm.services.WmService;
+
 
 @Controller
 @RequestMapping("/in")
 public class InController {
 
 	@Autowired
+	private WmService wmService;
+	@Autowired
+	private PositionService pService;
+
+	@Autowired
 	private CarService CarService;
-	
 	@Autowired
 	private InService inService;
 
-	
+	private static final Logger log = Logger.getLogger((InController.class));
 
 	@RequestMapping("/inList")
 	public String inList() {
@@ -38,7 +48,7 @@ public class InController {
 
 	@RequestMapping(value = "/list", method = RequestMethod.POST)
 	public @ResponseBody Map<String, Object> loadMenu(HttpServletRequest request, String inId) {
-		In in =  new In();
+		In in = new In();
 		in.setInId(inId);
 		int rows = Integer.valueOf(request.getParameter("rows"));
 		int page = Integer.valueOf(request.getParameter("page"));
@@ -53,7 +63,6 @@ public class InController {
 		model.addAttribute("in", in);
 		return View.in.IN_VIEW;
 	}
-	
 
 	@RequestMapping(value = "/toAdd", method = RequestMethod.GET)
 	public String addView() {
@@ -61,31 +70,56 @@ public class InController {
 	}
 
 	@RequestMapping(value = "/submit", method = RequestMethod.POST)
-	public @ResponseBody Map<String, Object> add(Car Car) {
+	public @ResponseBody Map<String, Object> add(In in) {
+		
 		Map<String, Object> map = new HashMap<String, Object>();
-		int isSuccess = CarService.insert(Car);
+
+
+		
+		Wm wm = wmService.selectByWmId(in.getWmId());
+		Position p = pService.selectByPId(in.getpId());
+		
+		if (wm.getWmCount() < in.getWmCount()) {
+			System.out.println(wm.getWmCount() <= in.getWmCount());
+			map.put("msg", "仓储资源可用数量只有" + wm.getWmCount() + "个");
+			map.put("flag", "false");
+			return map;
+		} else if (p.getpCount() < in.getpCount()) {
+			map.put("msg", "仓位资源可用位置只有" + wm.getWmCount() + "立方米");
+			map.put("flag", "false");
+			return map;
+		} else {
+			p.setpCount(p.getpCount()-in.getpCount());
+			wm.setWmCount(wm.getWmCount() - in.getWmCount());
+			
+		}
+
+		int isSuccess = inService.insert(in,wm,p);
+		
+		
 		if (isSuccess == 0) {
-			map.put("msg", "添加失败");
+			map.put("msg", "");
 			map.put("flag", "false");
 		} else {
 			map.put("msg", "添加成功");
 			map.put("flag", "success");
 		}
+
 		return map;
 	}
 
 	@RequestMapping(value = "/toUpdate", method = RequestMethod.GET)
 	public String toUpdate(Model model, Long id) {
-		Car Car = CarService.selectByPrimaryKey(id);
-		model.addAttribute("car", Car);
-		return View.in.IN_VIEW;
+		In in = inService.selectByPrimaryKey(id);
+		model.addAttribute(in);
+		return View.in.IN_UPDATE;
 	}
 
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
-	public @ResponseBody Map<String, Object> update(Car Car) {
+	public @ResponseBody Map<String, Object> update(In in,String state) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		int isSuccess = CarService.update(Car);
-
+		int isSuccess = inService.update(in);
+		
 		if (isSuccess == 0) {
 			map.put("msg", "更新失败");
 			map.put("flag", "false");
@@ -102,11 +136,12 @@ public class InController {
 		try {
 			String[] idstr = ids.split(",");
 			for (String id : idstr) {
-				CarService.delete(Long.parseLong(id));
+				inService.delete(Long.parseLong(id));
 			}
 			map.put("msg", "删除成功");
 			map.put("flag", "success");
 		} catch (Exception e) {
+			log.info("删除失败");
 			map.put("msg", "删除失败");
 			map.put("flag", "false");
 		}

@@ -44,6 +44,12 @@ public class WmServiceImpl implements WmService {
 		
 		return WmMapper.selectByPrimaryKey(id);
 	}
+	
+	@Override
+	public Wm selectByWmId(String wmId) {
+		
+		return WmMapper.selectByWmId(wmId);
+	}
 	@Override
 	public List<Wm> wmType() {
 		

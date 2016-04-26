@@ -19,4 +19,6 @@ public interface PositionService {
 
 	public List<Position> pType();
 
+	public Position selectByPId(String getpId);
+
 }

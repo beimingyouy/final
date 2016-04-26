@@ -23,20 +23,21 @@
 			</tr>
 			<tr>
 				<td>车辆名称:</td>
-				<td><input class="easyui-validatebox" type="text" name="carName"
-					id="carName" data-options=" required:true" /></td>
+				<td><input class="easyui-validatebox" type="text"
+					name="carName" id="carName" data-options=" required:true" /></td>
 			</tr>
 			<tr>
 				<td>车辆总数目:</td>
 				<td><input class="easyui-validatebox" type="text" name="carAll"
-					id="carAll" data-options=" required:true" /></td>
+					id="carAll" data-options=" required:true" validtype="zipcode" /></td>
 			</tr>
 			<tr>
 				<td>车辆可用数目:</td>
-				<td><input class="easyui-validatebox" type="text" name="carCount"
-					id="carCount" data-options=" required:true" /></td>
+				<td><input class="easyui-validatebox" type="text"
+					name="carCount" id="carCount" data-options=" required:true"
+					validtype="zipcode" /></td>
 			</tr>
-			
+
 
 			<tr>
 				<td><a id="sava_btn" href="javascript:void(0)"
@@ -50,12 +51,31 @@
 		</table>
 	</form>
 	<script>	
+$.extend($.fn.validatebox.defaults.rules, {
+	    
+	    zipcode: {
+	        validator: function (value) {
+	            var reg = /^[1-9]\d{0,5}$/;
+	            return reg.test(value);
+	        },
+	        message: '只允许输入1-6位的数字.'
+	    },
+
+	  
+	});
 	function formreset(){
 		$("#demo_add_form").form("reset");
 		
 	}
 	//提交添加
 	function add_demo_submit(){
+		var isValid = $('#demo_add_form').form('validate'); 
+	       if(isValid==false){
+	    	   $.messager.alert("错误提示", "您有内容填写错误" , "error",
+						function() {
+				})
+	           return ;
+	       }
 		var count = $("#carCount").val();
 		var all = $("#carAll").val();
 		if(all<count){
@@ -67,20 +87,14 @@
 		}
 		
 		
-		 var isValid = $('#demo_add_form').form('validate'); 
-	       if(isValid==false){
-	    	   $.messager.alert("错误提示", "您有必填内容为填写" , "error",
-						function() {
-				})
-	           return ;
-	       }
+		 
 	       
 		var formdate = $('#demo_add_form').serializeArray();
 		var url = '<%=path%>/car/submit';
-			$.post(url, formdate, function(json) {				
+			$.post(url, formdate, function(json) {
 				var flag = json.flag;
 				var msg = json.msg;
-				
+
 				if (flag == 'false') {
 					$.messager.alert("错误提示", "添加失败， 原因是" + msg, "error",
 							function() {

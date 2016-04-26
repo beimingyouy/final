@@ -44,6 +44,10 @@ public class PositionServiceImpl implements PositionService {
 		return PositionMapper.selectByPrimaryKey(id);
 	}
 	@Override
+	public Position selectByPId(String getpId) {
+		return PositionMapper.selectByPId(getpId);
+	}
+	@Override
 	public List<Position> pType() {
 		return PositionMapper.pType();
 	}

@@ -32,11 +32,11 @@
 		          	   handler: 		function(){
 		          		   					demo_add();
 		          		   				}},
-		          	  {id:"edit", 		text:"编辑车辆资源",		iconCls:'icon-edit',
+		          	  {id:"edit", 		text:"审核",		iconCls:'icon-edit',
 			           handler: 		function(){
 			        	   					demo_edit();
 			        	   				}},
-			          {id:"delete", 	text:"删除车辆",		iconCls:'icon-remove',
+			          {id:"delete", 	text:"删除审核单",		iconCls:'icon-remove',
 				       handler: 		function(){
 				    	  					demo_delete();
 				    	   				}},
@@ -188,9 +188,14 @@
 	//修改
 
 	function demo_edit(id) {
+		
 		var row = $('#demo_datagrid').datagrid('getChecked');
 		if (row == ''||row.length!=1) {
 			$.messager.alert('提示框', '请选择一行数据！');
+			return false;
+		}
+		if(row[0].state==0||row[0].state==1){
+			$.messager.alert('提示框', '该申请单已经审核，如审核失败请重新提交申请单');
 			return false;
 		}
 		win= $('<div/>').dialog({
@@ -198,7 +203,7 @@
 			width:600,
 			height:400,
 			modal:true,
-			href:'<%=path%>/car/toUpdate?id='+row[0].id,
+			href:'<%=path%>/in/toUpdate?id='+row[0].id,
 			onClose:function(){
 				demo_window_close();
 			}
@@ -220,7 +225,7 @@
 			}
 		}
 	
-		var url = '<%=path%>/car/toDelete?ids=' + ids;
+		var url = '<%=path%>/in/toDelete?ids=' + ids;
 		$.messager.confirm('确认', '您是否要删除？', function(r) {
 			if (r) {
 				$.post(url, ids, function(json) {
@@ -228,16 +233,16 @@
 					var msg = json.msg;
 					if (flag == "false") {
 						$.messager.alert("错误提示", "删除失败", "error", function() {
-						})
+						});
 					} else {
 						$.messager.alert("提示", "删除成功", "info", function() {
-						})
+						});
 
 						$("#demo_datagrid").datagrid("reload");
 					}
-				}, 'json')
+				}, 'json');
 			}
-		})
+		});
 	}
 	//条件查询
 	function demoSearch() {
@@ -250,7 +255,7 @@
 	function demoReset() {
 		$('#demo_list_form').form('reset');
 		$('#demo_datagrid').datagrid('load', {
-			pId : $('#carId').val()
+			inId : $('#inId').val()
 		});
 	}
 
@@ -276,8 +281,8 @@
 			<form id="demo_list_form" method="post">
 				<table cellpadding="0" cellspacing="1" class="formtable">
 					<tr>
-						<td align="center" width="10%">车辆编号</td>
-						<td class="value" width="20%"><input id="pId" name="pId"
+						<td align="center" width="10%">入库单编号</td>
+						<td class="value" width="20%"><input id="inId" name="inId"
 							class="easyui-validatebox"></td>
 						</td>
 						<td colspan="2" align="center" class="value" width="40%"><a

@@ -17,6 +17,12 @@
     from T_POSITION
     where id = #{id,jdbcType=DECIMAL}
   </select>
+   <select id="selectByPId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_POSITION
+    where P_ID = #{pId,jdbcType=DECIMAL}
+  </select>
   <select id="pType" resultMap="BaseResultMap" >
     select 
     <include refid="Base_Column_List" />

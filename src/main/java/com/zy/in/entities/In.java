@@ -1,22 +1,21 @@
 package com.zy.in.entities;
 
-import java.math.BigDecimal;
 import java.util.Date;
 
 public class In {
-	private BigDecimal id;
+	private Long id;
 
 	private String inId;
 
 	private String inNote;
 
-	private BigDecimal wmId;
+	private String wmId;
 
-	private BigDecimal wmCount;
+	private Long wmCount;
 
-	private BigDecimal pId;
+	private String pId;
 
-	private BigDecimal pCount;
+	private Long pCount;
 
 	private Date createTime;
 
@@ -32,11 +31,11 @@ public class In {
 		this.state = state;
 	}
 
-	public BigDecimal getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(BigDecimal id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -56,35 +55,35 @@ public class In {
 		this.inNote = inNote == null ? null : inNote.trim();
 	}
 
-	public BigDecimal getWmId() {
+	public String getWmId() {
 		return wmId;
 	}
 
-	public void setWmId(BigDecimal wmId) {
+	public void setWmId(String wmId) {
 		this.wmId = wmId;
 	}
 
-	public BigDecimal getWmCount() {
+	public Long getWmCount() {
 		return wmCount;
 	}
 
-	public void setWmCount(BigDecimal wmCount) {
+	public void setWmCount(Long wmCount) {
 		this.wmCount = wmCount;
 	}
 
-	public BigDecimal getpId() {
+	public String getpId() {
 		return pId;
 	}
 
-	public void setpId(BigDecimal pId) {
+	public void setpId(String pId) {
 		this.pId = pId;
 	}
 
-	public BigDecimal getpCount() {
+	public Long getpCount() {
 		return pCount;
 	}
 
-	public void setpCount(BigDecimal pCount) {
+	public void setpCount(Long pCount) {
 		this.pCount = pCount;
 	}
 

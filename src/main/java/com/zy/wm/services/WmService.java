@@ -18,6 +18,8 @@ public interface WmService {
 	public int delete(Long long1);
 	
 	public List<Wm> wmType();
+
+	public Wm selectByWmId(String wmId);
 	
 
 }

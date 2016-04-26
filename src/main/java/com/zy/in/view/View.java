@@ -5,6 +5,7 @@ public interface View {
 		public static String IN_LIST = "WEB-INF/view/in/in_list";
 		public static String IN_ADD = "WEB-INF/view/in/in_add";
 		public static String IN_VIEW = "WEB-INF/view/in/in_view";		
+		public static String IN_UPDATE = "WEB-INF/view/in/in_update";	
 	}
 
 }

@@ -29,12 +29,12 @@
 			<tr>
 				<td>仓位总大小:</td>
 				<td><input class="easyui-validatebox" type="text" name="pAll"
-					id="pAll" data-options=" required:true" /></td>
+					id="pAll" data-options=" required:true"   validtype="zipcode"/></td>
 			</tr>
 			<tr>
 				<td>可用大小:</td>
 				<td><input class="easyui-validatebox" type="text" name="pCount"
-					id="pCount" data-options=" required:true" /></td>
+					id="pCount" data-options=" required:true"   validtype="zipcode"/></td>
 			</tr>
 
 			<tr>
@@ -48,14 +48,35 @@
 
 		</table>
 	</form>
-	<script>	
+	<script>
+	$.extend($.fn.validatebox.defaults.rules, {
+	    
+	    zipcode: {
+	        validator: function (value) {
+	            var reg = /^[1-9]\d{0,5}$/;
+	            return reg.test(value);
+	        },
+	        message: '只允许输入1-6位的数字.'
+	    },
+
+	  
+	});
 	function formreset(){
 		$("#demo_add_form").form("reset");
 		
 	}
 	//提交添加
 	function add_demo_submit(){
-		var count = $("#pCount").val();
+	
+		
+		 var isValid = $('#demo_add_form').form('validate'); 
+	       if(isValid==false){
+	    	   $.messager.alert("错误提示", "您有内容填写错误" , "error",
+						function() {
+				})
+	           return ;
+	       }
+	   	var count = $("#pCount").val();
 		var all = $("#pAll").val();
 		if(all<count){
 			   $.messager.alert("错误提示", "可用数量大于总数量！" , "error",
@@ -64,15 +85,6 @@
 				});
 			   return ; 
 		}
-		
-		 var isValid = $('#demo_add_form').form('validate'); 
-	       if(isValid==false){
-	    	   $.messager.alert("错误提示", "您有必填内容为填写" , "error",
-						function() {
-				})
-	           return ;
-	       }
-	       
 		var formdate = $('#demo_add_form').serializeArray();
 		var url = '<%=path%>/position/submit';
 			$.post(url, formdate, function(json) {				

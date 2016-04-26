@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Param;
 import com.zy.in.entities.In;
 
 public interface InMapper {
-    int deleteByPrimaryKey(BigDecimal id);
+    int deleteByPrimaryKey(Long id);
 
     int insert(In record);
 

@@ -5,9 +5,9 @@
 		<id column="ID" property="id" jdbcType="DECIMAL" />
 		<result column="IN_ID" property="inId" jdbcType="VARCHAR" />
 		<result column="IN_NOTE" property="inNote" jdbcType="VARCHAR" />
-		<result column="WM_ID" property="wmId" jdbcType="DECIMAL" />
+		<result column="WM_ID" property="wmId" jdbcType="VARCHAR" />
 		<result column="WM_COUNT" property="wmCount" jdbcType="DECIMAL" />
-		<result column="P_ID" property="pId" jdbcType="DECIMAL" />
+		<result column="P_ID" property="pId" jdbcType="VARCHAR" />
 		<result column="P_COUNT" property="pCount" jdbcType="DECIMAL" />
 		<result column="CREATE_TIME" property="createTime" jdbcType="DATE" />
 		<result column="UPDATE_TIME" property="updateTime" jdbcType="DATE" />
@@ -43,9 +43,9 @@
 	<insert id="insertSelective" parameterType="com.zy.in.entities.In">
 		insert into T_IN
 		<trim prefix="(" suffix=")" suffixOverrides=",">
-			<if test="id != null">
+			
 				ID,
-			</if>
+			
 			<if test="inId != null">
 				IN_ID,
 			</if>
@@ -64,18 +64,17 @@
 			<if test="pCount != null">
 				P_COUNT,
 			</if>
-			<if test="createTime != null">
+			
 				CREATE_TIME,
-			</if>
+			
 			<if test="updateTime != null">
 				UPDATE_TIME,
 			</if>
-			STATE
+			
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
-			<if test="id != null">
-				#{id,jdbcType=DECIMAL},
-			</if>
+			
+			SEQ_T_IN.NEXTVAL,
 			<if test="inId != null">
 				#{inId,jdbcType=VARCHAR},
 			</if>
@@ -94,15 +93,11 @@
 			<if test="pCount != null">
 				#{pCount,jdbcType=DECIMAL},
 			</if>
-			<if test="createTime != null">
-				#{createTime,jdbcType=DATE},
-			</if>
+			sysdate,
 			<if test="updateTime != null">
 				#{updateTime,jdbcType=DATE},
 			</if>
-			<if test="state != null">
-				#{state,jdbcType=DATE},
-			</if>
+			
 		</trim>
 	</insert>
 	<update id="updateByPrimaryKeySelective" parameterType="com.zy.in.entities.In">

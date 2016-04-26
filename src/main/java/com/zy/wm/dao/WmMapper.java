@@ -14,6 +14,8 @@ public interface WmMapper {
     int insertSelective(Wm record);
 
     Wm selectByPrimaryKey(Long id);
+    
+    Wm selectByWmId(String wmId);
 
     int updateByPrimaryKeySelective(Wm record);
 

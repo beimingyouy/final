@@ -5,19 +5,26 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import com.zy.car.dao.CarMapper;
-import com.zy.car.entities.Car;
 import com.zy.in.dao.InMapper;
 import com.zy.in.entities.In;
+import com.zy.position.dao.PositionMapper;
+import com.zy.position.entities.Position;
+import com.zy.wm.dao.WmMapper;
+import com.zy.wm.entities.Wm;
 
+@Transactional
 @Service
 public class InServiceImpl implements InService {
 
-	@Autowired
-	private CarMapper CarMapper;
+
 	@Autowired
 	private InMapper inMapper;
+	@Autowired
+	private WmMapper wmMapper;
+	@Autowired
+	private PositionMapper pMapper;
 
 	public Map<String, Object> queryAll(int rows, int pagenum, In in) {
 
@@ -30,19 +37,36 @@ public class InServiceImpl implements InService {
 		return datemap;
 	}
 
-	public int insert(Car Car) {
-
-		return 1;
+	public int insert(In In,Wm wm,Position p ) {
+		
+		wmMapper.updateByPrimaryKey(wm);
+		pMapper.updateByPrimaryKey(p);
+		return inMapper.insertSelective(In);
 	}
 
-	public int update(Car Car) {
-
-		return CarMapper.updateByPrimaryKeySelective(Car);
+	public int update(In in) {
+		
+		Wm wm = wmMapper.selectByWmId(in.getWmId());
+		Position p = pMapper.selectByPId(in.getpId());
+		wm.setWmCount(wm.getWmCount()+in.getWmCount());
+		p.setpCount(p.getpCount()+in.getpCount());
+		
+		wmMapper.updateByPrimaryKey(wm);
+		pMapper.updateByPrimaryKey(p);
+		
+		return inMapper.updateByPrimaryKeySelective(in);
 	}
 
 	public int delete(Long id) {
-
-		return CarMapper.deleteByPrimaryKey(id);
+		In in = inMapper.selectByPrimaryKey(id);
+		Wm wm = wmMapper.selectByWmId(in.getWmId());
+		Position p = pMapper.selectByPId(in.getpId());
+		wm.setWmCount(wm.getWmCount()+in.getWmCount());
+		p.setpCount(p.getpCount()+in.getpCount());
+		
+		wmMapper.updateByPrimaryKey(wm);
+		pMapper.updateByPrimaryKey(p);
+		return inMapper.deleteByPrimaryKey(id);
 	}
 
 	@Override
