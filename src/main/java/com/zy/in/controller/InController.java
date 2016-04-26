@@ -118,7 +118,13 @@ public class InController {
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public @ResponseBody Map<String, Object> update(In in,String state) {
 		Map<String, Object> map = new HashMap<String, Object>();
+		System.out.println(in.getWmId());
+		System.out.println(in.getWmId());
+		System.out.println(in.getWmId());
+		System.out.println(in.getWmId());
 		int isSuccess = inService.update(in);
+		
+		System.out.println(in.getWmId());
 		
 		if (isSuccess == 0) {
 			map.put("msg", "更新失败");

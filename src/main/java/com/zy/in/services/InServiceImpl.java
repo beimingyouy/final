@@ -45,8 +45,10 @@ public class InServiceImpl implements InService {
 	}
 
 	public int update(In in) {
-		
+//		
 		Wm wm = wmMapper.selectByWmId(in.getWmId());
+		
+
 		Position p = pMapper.selectByPId(in.getpId());
 		wm.setWmCount(wm.getWmCount()+in.getWmCount());
 		p.setpCount(p.getpCount()+in.getpCount());

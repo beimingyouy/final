@@ -35,11 +35,11 @@
 				</tr>
 				<tr>
 					<td>仓位资源类型：</td>
-					<td>${in.wmId}</td>
+					<td>${in.pId}</td>
 				</tr>
 				<tr>
 					<td>占用仓位资源数目：</td>
-					<td>${in.wmCount}</td>
+					<td>${in.pCount}</td>
 				</tr>
 				<tr>
 					<td>备注：</td>
@@ -68,6 +68,10 @@
 				</tr>
 				<tr>
 					<td><input type="hidden" name="id" value="${in.id}" /></td>
+					<td><input type="hidden" name="wmId" value="${in.wmId}" /></td>
+					<td><input type="hidden" name="pId" value="${in.pId}" /></td>
+					<td><input type="hidden" name="wmCount" value="${in.wmCount}" /></td>
+					<td><input type="hidden" name="pCount" value="${in.pCount}" /></td>
 					<td><a id="sava_btn" href="javascript:void(0)"
 						onclick="update_demo_submit()" class="easyui-linkbutton"
 						data-options="iconCls:'icon-save'">保存数据</a></td>
