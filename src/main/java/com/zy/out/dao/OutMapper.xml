@@ -125,6 +125,13 @@
 		#{createDate,jdbcType=TIMESTAMP}
 		where ID = #{id,jdbcType=DECIMAL}
 	</update>
+	<update id="check" parameterType="com.zy.out.entities.Out">
+		update T_OUT
+		set
+		state = 3,
+		update_date = sysdate
+		where ID = #{id,jdbcType=DECIMAL}
+	</update>
 	
 	  <select id="getTotal" resultType="INTEGER">
 		select

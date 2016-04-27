@@ -17,4 +17,6 @@ public interface OutService {
 
 	public int delete(Long long1);
 
+	public int check(long parseLong);
+
 }

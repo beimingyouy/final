@@ -36,6 +36,7 @@ public class CarServiceImpl implements CarService {
 	}
 	public int delete(Long id) {
 		
+		
 		return CarMapper.deleteByPrimaryKey(id);
 	}
 	@Override

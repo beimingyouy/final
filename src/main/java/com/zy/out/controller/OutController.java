@@ -95,12 +95,29 @@ public class OutController {
 		try {
 			String[] idstr = ids.split(",");
 			for (String id : idstr) {
-				carService.delete(Long.parseLong(id));
+				outService.delete(Long.parseLong(id));
 			}
 			map.put("msg", "删除成功");
 			map.put("flag", "success");
 		} catch (Exception e) {
 			map.put("msg", "删除失败");
+			map.put("flag", "false");
+		}
+
+		return map;
+	}
+	@RequestMapping(value = "/toCheck", method = RequestMethod.POST)
+	public @ResponseBody Map<String, Object> toCheck(String ids) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		try {
+			String[] idstr = ids.split(",");
+			for (String id : idstr) {
+				outService.check(Long.parseLong(id));
+			}
+			map.put("msg", "确认出库成功");
+			map.put("flag", "success");
+		} catch (Exception e) {
+			map.put("msg", "确认失败");
 			map.put("flag", "false");
 		}
 

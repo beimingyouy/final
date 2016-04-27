@@ -34,7 +34,7 @@
 		          		   				}},
 		          	  {id:"edit", 		text:"出库单完成确认",		iconCls:'icon-edit',
 			           handler: 		function(){
-			        	   					demo_edit();
+			        	   					demo_check();
 			        	   				}},
 			          {id:"delete", 	text:"删除审核单",		iconCls:'icon-remove',
 				       handler: 		function(){
@@ -63,6 +63,11 @@
 				width : 80
 			} ] ],
 			columns : [ [ {
+				field : 'inId',
+				title : '入库单编号',
+				align : 'center',
+				width : 100
+			},{
 				field : 'outId',
 				title : '出库单编号',
 				align : 'center',
@@ -86,9 +91,11 @@
 				styler: function(value,row,index){
 					if (value == 1){
 						
-						return 'color:red;';
+						return 'color:black;';
 					}else if(value == 0){
 						return 'color:blue';
+					}else if(value == 3){
+						return 'color:red';
 					}
 					else{
 						return;
@@ -98,8 +105,10 @@
 							return "出库审核成功";
 						} else if(value==0){
 							return "出库失败";
-						}else{
+						}else if(value==2){
 							return "待出库";
+						}else{
+							return "出库完成";
 						}
 					}
 
@@ -122,7 +131,7 @@
 						}
                     } 
 			}, {
-				field : 'updateTime',
+				field : 'updateDate',
 				title : '实际出库时间',
 				align : 'center',
 				width : 200,
@@ -194,13 +203,12 @@
 			}
 		});
 	}
-	
-	//删除
-	function demo_delete() {
+	//确认出库
+	function demo_check() {
 		var row = $('#demo_datagrid').datagrid('getChecked');
 		
-		if(row[0].state==0||row[0].state==1){
-			$.messager.alert('提示框', '选中的申请单中，包含已经审核过的申请单。');
+		if(row[0].state!=1){
+			$.messager.alert('提示框', '只有出库成功的申请单才可以确认。');
 			return false;
 		}
 		
@@ -216,7 +224,48 @@
 			}
 		}
 	
-		var url = '<%=path%>/in/toDelete?ids=' + ids;
+		var url = '<%=path%>/out/toCheck?ids=' + ids;
+		$.messager.confirm('确认', '您是否要确认完成？', function(r) {
+			if (r) {
+				$.post(url, ids, function(json) {
+					var flag = json.flag;
+					var msg = json.msg;
+					if (flag == "false") {
+						$.messager.alert("错误提示", "确认失败", "error", function() {
+						});
+					} else {
+						$.messager.alert("提示", "确认成功", "info", function() {
+						});
+
+						$("#demo_datagrid").datagrid("reload");
+					}
+				}, 'json');
+			}
+		});
+	}
+	
+	//删除
+	function demo_delete() {
+		var row = $('#demo_datagrid').datagrid('getChecked');
+		
+		if(row[0].state==1){
+			$.messager.alert('提示框', '选中的申请单中，包含已经出库成功的申请单。');
+			return false;
+		}
+		
+		if(row == ''){
+			$.messager.alert('提示框','请选择一行数据！');	
+			return false;
+		}
+		var ids='';
+		for(var i=0;i<row.length;i++){
+			ids+=row[i].id;
+			if(i<row.length-1){
+				ids+=',';
+			}
+		}
+	
+		var url = '<%=path%>/out/toDelete?ids=' + ids;
 		$.messager.confirm('确认', '您是否要删除？', function(r) {
 			if (r) {
 				$.post(url, ids, function(json) {
@@ -238,7 +287,7 @@
 	//条件查询
 	function demoSearch() {
 		$('#demo_datagrid').datagrid('load', {
-			carId : $('#carId').val()
+			outId : $('#outId').val()
 		});
 	}
 
@@ -246,7 +295,7 @@
 	function demoReset() {
 		$('#demo_list_form').form('reset');
 		$('#demo_datagrid').datagrid('load', {
-			inId : $('#inId').val()
+			outId : $('#outId').val()
 		});
 	}
 
@@ -272,8 +321,8 @@
 			<form id="demo_list_form" method="post">
 				<table cellpadding="0" cellspacing="1" class="formtable">
 					<tr>
-						<td align="center" width="10%">入库单编号</td>
-						<td class="value" width="20%"><input id="inId" name="inId"
+						<td align="center" width="10%">出库单编号</td>
+						<td class="value" width="20%"><input id="outId" name="outId"
 							class="easyui-validatebox"></td>
 						</td>
 						<td colspan="2" align="center" class="value" width="40%"><a

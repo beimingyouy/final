@@ -49,9 +49,11 @@ public class InServiceImpl implements InService {
 	public int update(In in,String state) {
 		
 		Out out = new Out();
+		
 		if(state.equals("1")){
 			out.setOutId("Out"+in.getInId());
 			out.setState(2L);
+			out.setInId(in.getInId());
 			outMapper.insertSelective(out);
 		}
 		Wm wm = wmMapper.selectByWmId(in.getWmId());

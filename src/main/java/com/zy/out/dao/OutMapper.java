@@ -22,4 +22,6 @@ public interface OutMapper {
 	List<Out> queryAll(@Param("start") int start, @Param("end") int end, @Param("outId") String outId);
 
 	Integer getTotal(@Param("outId") String outId);
+
+	int check(long id);
 }

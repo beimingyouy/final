@@ -128,10 +128,12 @@ public class InController {
 	public @ResponseBody Map<String, Object> update(In in,String state) {
 		Map<String, Object> map = new HashMap<String, Object>();
 	
+		System.out.println(in.getInId());
+		System.out.println(in.getInId());
+		System.out.println(in.getInId());
+		System.out.println(in.getInId());
+		System.out.println(in.getInId());
 		int isSuccess = inService.update(in,state);
-		
-		
-		System.out.println(in.getWmId());
 		
 		if (isSuccess == 0) {
 			map.put("msg", "更新失败");

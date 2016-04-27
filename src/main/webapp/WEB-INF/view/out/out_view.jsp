@@ -33,13 +33,16 @@
 					<td>审核状态：</td>
 					<c:choose>
 						<c:when test="${out.state==1 }">
-							<td style="color: red">审核成功</td>
+							<td style="color: blue">审核成功</td>
 						</c:when>
 						<c:when test="${out.state==0 }">
 							<td style="color: blue">审核失败</td>
 						</c:when>
 						<c:when test="${out.state==2 }">
 							<td style="color: blue">等待审核</td>
+						</c:when>
+						<c:when test="${out.state==3 }">
+							<td style="color: red">完成出库</td>
 						</c:when>
 					</c:choose>
 				</tr>
