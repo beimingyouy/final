@@ -46,7 +46,7 @@
 					<td>${in.inNote}</td>
 				</tr>
 				<tr>
-					<td>审核状态：${in.state}${in.state}</td>
+					<td>审核状态：</td>
 					<c:choose>
 						<c:when test="${in.state==1 }">
 							<td style="color: red">审核成功</td>

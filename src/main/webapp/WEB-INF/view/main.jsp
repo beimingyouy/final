@@ -54,8 +54,8 @@
 	<div region="north"  border="false"
 		style="overflow: hidden; height: 30px; background: url(<%=path%>/images/layout-browser-hd-bg.gif) #7f99be repeat-x center 50%; line-height: 20px; color: #fff; font-family: Verdana, 微软雅黑, 黑体">
 		<span style="float: right; padding-right: 20px;" class="head">欢迎
-			${user.truename} <a href="#" style="color:white"> 修改密码</a> <a
-			href="<%=path%>/chz/login_out.do" id="loginOut" style="color:white">安全退出</a>
+			${user.truename}  <a
+			href="<%=path%>/admin/logout" id="loginOut" style="color:white">安全退出</a>
 		</span> <span style="padding-left: 10px; font-size: 16px;"><img
 			width="20" height="20" align="absmiddle"
 			src="<%=path%>/images/blocks.gif" />角色管理系统 </span>
