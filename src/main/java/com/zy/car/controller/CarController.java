@@ -1,6 +1,8 @@
 package com.zy.car.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.zy.car.entities.Car;
 import com.zy.car.services.CarService;
 import com.zy.car.view.View;
+import com.zy.wm.entities.Wm;
 
 @Controller
 @RequestMapping("/car")
@@ -107,6 +110,12 @@ public class CarController {
 		}
 
 		return map;
+	}
+	@RequestMapping(value="/carType",method = RequestMethod.POST)
+	public @ResponseBody List<Car> wmType(){
+		List<Car> list  =  new ArrayList<Car>();
+		list = CarService.carType();
+		return list;
 	}
 
 }

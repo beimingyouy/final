@@ -13,6 +13,8 @@ public interface CarMapper {
 
 	int insertSelective(Car record);
 
+	Car selectByCarId(String id);
+
 	Car selectByPrimaryKey(Long id);
 
 	int updateByPrimaryKeySelective(Car record);
@@ -22,4 +24,6 @@ public interface CarMapper {
 	List<Car> queryAll(@Param("start") int start, @Param("end") int end, @Param("carId") String carId);
 
 	Integer getTotal(@Param("carId") String CarId);
+
+	List<Car> carType();
 }

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %> 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -13,47 +14,40 @@
 			<table cellpadding="5">
 				<tr>
 					<td>id：</td>
-					<td>${in.id}</td>
+					<td>${out.id}</td>
 				</tr>
 				<tr>
-					<td>入库单编号：</td>
-					<td>${in.inId}</td>
+					<td>出库单编号：</td>
+					<td>${out.outId}</td>
 				</tr>
 
 				<tr>
-					<td>仓储资源类型：</td>
-					<td>${in.wmId}</td>
+					<td>车辆资源类型：</td>
+					<td>${out.carId}</td>
 				</tr>
 				<tr>
 					<td>占用仓储资源数目：</td>
-					<td>${in.wmCount}</td>
+					<td>${out.carCount}</td>
 				</tr>
-				<tr>
-					<td>仓位资源类型：</td>
-					<td>${in.wmId}</td>
-				</tr>
-				<tr>
-					<td>占用仓位资源数目：</td>
-					<td>${in.wmCount}</td>
-				</tr>
-				<tr>
-					<td>备注：</td>
-					<td>${in.inNote}</td>
-				</tr>
-				<tr>
+				
 					<td>审核状态：</td>
 					<c:choose>
-						<c:when test="${in.state==1 }">
+						<c:when test="${out.state==1 }">
 							<td style="color: red">审核成功</td>
 						</c:when>
-						<c:when test="${in.state==0 }">
+						<c:when test="${out.state==0 }">
 							<td style="color: blue">审核失败</td>
 						</c:when>
-						<c:when test="${in.state==2 }">
+						<c:when test="${out.state==2 }">
 							<td style="color: blue">等待审核</td>
 						</c:when>
 					</c:choose>
 				</tr>
+				<tr>
+					<td>出库单创建时间：</td>
+					<td><fmt:formatDate value="${out.createDate }" pattern="yyyy年MM月dd日HH点mm分ss秒" /></td>
+				</tr>
+				
 
 			</table>
 

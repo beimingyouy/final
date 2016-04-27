@@ -1,6 +1,7 @@
 package com.zy.car.services;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,5 +43,13 @@ public class CarServiceImpl implements CarService {
 		
 		return CarMapper.selectByPrimaryKey(id);
 	}
-
+	
+	@Override
+	public Car selectByPrimaryKey(String carId) {
+		return CarMapper.selectByCarId(carId);
+	}
+	@Override
+	public List<Car> carType() {
+		return CarMapper.carType();
+	}
 }

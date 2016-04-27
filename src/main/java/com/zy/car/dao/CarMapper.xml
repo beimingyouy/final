@@ -17,6 +17,18 @@
     from T_CAR
     where ID = #{id,jdbcType=DECIMAL}
   </select>
+    <select id="selectByCarId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_CAR
+    where CAR_ID = #{carId,jdbcType=DECIMAL}
+  </select>
+     <select id="carType" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_CAR
+    
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from T_CAR
     where ID = #{id,jdbcType=DECIMAL}

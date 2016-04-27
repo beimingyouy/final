@@ -16,13 +16,13 @@
 		CREATE_DATE,STATE,UPDATE_DATE
 	</sql>
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
-		parameterType="java.math.BigDecimal">
+		parameterType="java.lang.Long">
 		select
 		<include refid="Base_Column_List" />
 		from T_OUT
 		where ID = #{id,jdbcType=DECIMAL}
 	</select>
-	<delete id="deleteByPrimaryKey" parameterType="java.math.BigDecimal">
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
 		delete from T_OUT
 		where ID = #{id,jdbcType=DECIMAL}
 	</delete>
@@ -107,6 +107,9 @@
 			<if test="createDate != null">
 				CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
 			</if>
+			<if test="state != null">
+				STATE = #{state,jdbcType=TIMESTAMP},
+			</if>
 		</set>
 		where ID = #{id,jdbcType=DECIMAL}
 	</update>
@@ -151,6 +154,6 @@
 		)A
 		WHERE rownum &lt;= #{end,jdbcType=DECIMAL}
 		) B
-		WHERE r &gt;#{start,jdbcType=DECIMAL} order by ID
+		WHERE r &gt;#{start,jdbcType=DECIMAL} order by CREATE_DATE DESC
 	</select>
 </mapper>

@@ -1,6 +1,7 @@
 package com.zy.out.services;
 import java.util.Map;
 
+import com.zy.car.entities.Car;
 import com.zy.out.entities.Out;
 
 
@@ -12,7 +13,7 @@ public interface OutService {
 
 	public int insert(Out Out);
 
-	public int update(Out Out);
+	public int update(Out Out,Car car);
 
 	public int delete(Long long1);
 

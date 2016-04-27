@@ -9,9 +9,9 @@ public class Car {
 
     private String carName;
 
-    private BigDecimal carCount;
+    private Long carCount;
 
-    private BigDecimal carAll;
+    private Long carAll;
 
     public Long getId() {
         return id;
@@ -37,19 +37,19 @@ public class Car {
         this.carName = carName == null ? null : carName.trim();
     }
 
-    public BigDecimal getCarCount() {
+    public Long getCarCount() {
         return carCount;
     }
 
-    public void setCarCount(BigDecimal carCount) {
+    public void setCarCount(Long carCount) {
         this.carCount = carCount;
     }
 
-    public BigDecimal getCarAll() {
+    public Long getCarAll() {
         return carAll;
     }
 
-    public void setCarAll(BigDecimal carAll) {
+    public void setCarAll(Long carAll) {
         this.carAll = carAll;
     }
 }

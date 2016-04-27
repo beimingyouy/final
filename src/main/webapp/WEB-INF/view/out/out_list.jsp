@@ -30,7 +30,7 @@
 			var toolbar = [
 		              {id:"add", 		text:"出库",		iconCls:'icon-add',
 		          	   handler: 		function(){
-		          		   					demo_add();
+		          		 					demo_edit();
 		          		   				}},
 		          	  {id:"edit", 		text:"出库单完成确认",		iconCls:'icon-edit',
 			           handler: 		function(){
@@ -149,8 +149,8 @@
 				width : 800,
 				height : 600,
 				modal : true,
-				href : '<%=path%>/in/view?id=' + id,
-			onClose : function() {
+				href : '<%=path%>/out/view?id=' + id,
+				onClose : function() {
 				demo_window_close();
 			}
 		});
@@ -164,7 +164,7 @@
 			width:600,
 			height:400,
 			modal:true,
-			href:'<%=path%>/in/toAdd',
+			href:'<%=path%>/out/toUpdate',
 			onClose:function(){
 				demo_window_close();
 			}
@@ -188,7 +188,7 @@
 			width:600,
 			height:400,
 			modal:true,
-			href:'<%=path%>/in/toUpdate?id='+row[0].id,
+			href:'<%=path%>/out/toUpdate?id='+row[0].id,
 			onClose:function(){
 				demo_window_close();
 			}
