@@ -102,11 +102,11 @@
 					}},
 					formatter: function(value,row,index){
 						if (value==1){
-							return "出库审核成功";
+							return "运输中";
 						} else if(value==0){
 							return "出库失败";
 						}else if(value==2){
-							return "待出库";
+							return "车辆选择中";
 						}else{
 							return "出库完成";
 						}
