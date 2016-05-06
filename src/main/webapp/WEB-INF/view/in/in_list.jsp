@@ -28,11 +28,11 @@
 		var toolbar =  new Array();
 		$(function(){
 			var toolbar = [
-		              {id:"add", 		text:"入库单申请",		iconCls:'icon-add',
+		              {id:"add", 		text:"入库单新增",		iconCls:'icon-add',
 		          	   handler: 		function(){
 		          		   					demo_add();
 		          		   				}},
-		          	  {id:"edit", 		text:"审核",		iconCls:'icon-edit',
+		          	  {id:"edit", 		text:"出库",		iconCls:'icon-edit',
 			           handler: 		function(){
 			        	   					demo_edit();
 			        	   				}},

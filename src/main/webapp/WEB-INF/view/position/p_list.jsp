@@ -79,7 +79,7 @@
 				width : 100
 			}, {
 				field : 'pAll',
-				title : '仓位名称',
+				title : '最大数量',
 				align : 'center',
 				width : 100
 			}

@@ -79,7 +79,7 @@
 				width : 100
 			}, {
 				field : 'carAll',
-				title : '车辆名称',
+				title : '最大数量',
 				align : 'center',
 				width : 100
 			}

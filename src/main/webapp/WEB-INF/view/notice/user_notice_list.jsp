@@ -1,19 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://"
 			+ request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 %>
+<!DOCTYPE html>
+<html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
 <base href="<%=basePath%>">
 
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" type="text/css"
 	href="<%=path%>/js/jquery-easyui-1.3.6/themes/default/easyui.css">
 <link rel="stylesheet" type="text/css"
@@ -23,23 +22,21 @@
 	src="<%=path%>/js/jquery-easyui-1.3.6/jquery.easyui.min.js"></script>
 <script type="text/javascript"
 	src="<%=path%>/js/jquery-easyui-1.3.6/locale/easyui-lang-zh_CN.js"></script>
+<script type="text/javascript"
+	src="<%=path%>/js/myjs.js"></script>
 <script type="text/javascript">
 		var win;
 		var toolbar =  new Array();
 		$(function(){
 			var toolbar = [
-		              {id:"add", 		text:"添加仓储资源",		iconCls:'icon-add',
-		          	   handler: 		function(){
-		          		   					demo_add();
-		          		   				}},
-		          	  {id:"edit", 		text:"编辑仓储资源",		iconCls:'icon-edit',
-			           handler: 		function(){
-			        	   					demo_edit();
-			        	   				}},
-			          {id:"delete", 	text:"删除仓储",		iconCls:'icon-remove',
+			          {id:"delete", 	text:"删除公告",		iconCls:'icon-remove',
 				       handler: 		function(){
 				    	  					demo_delete();
 				    	   				}},
+				      {id:"add", 	text:"发布公告",		iconCls:'icon-add',
+				    					       handler: 		function(){
+				    					    	  					demo_add();
+				    					    	   				}},
 			          {id:"refresh", 	text:"刷新",			iconCls:'icon-reload',
 				       handler: 		function(){
 				    	   					$("#demo_datagrid").datagrid("reload");
@@ -47,8 +44,9 @@
 	                ];
 			//定义列表
 			$('#demo_datagrid').datagrid({
-				url:'<%=path%>/wm/list',
+			url:'<%=path%>/notice/list.do',
 			fit : true,
+			loadMsg:				"正在加载公告列表",
 			fitColumns : false,
 			singleSelect : false,
 			rownumbers : true,
@@ -57,32 +55,44 @@
 			autoRowHeight : true,
 			toolbar : toolbar,
 			frozenColumns : [ [ {
-				field : 'id',
-				title : 'id',
+				field : 'notice_title',
+				title : '标题',
 				align : 'center',
-				width : 80
+				width : 200
 			} ] ],
 			columns : [ [ {
-				field : 'wmId',
-				title : '仓储编号',
+				field : 'create_date',
+				title : '发布时间',
 				align : 'center',
-				width : 100
+				width : 150,
+				formatter: function (value) { 
+					if (value == null) { 
+						return value; 
+						}
+					else{
+						return new Date(value).format("yyyy-MM-dd hh:mm:ss");
+						}
+					}
 			}, {
-				field : 'wmName',
-				title : '仓储名称',
+				field : 'end_date',
+				title : '截止时间',
 				align : 'center',
-				width : 100
-			}, {
-				field : 'wmCount',
-				title : '可用数量',
+				width : 150,
+				formatter: function (value) { 
+					if (value == null) { 
+						return value; 
+						}
+					else{
+						return new Date(value).format("yyyy-MM-dd");
+						}
+					}
+			},{
+				field : 'create_user',
+				title : '发布人',
 				align : 'center',
-				width : 100
-			}, {
-				field : 'wmAll',
-				title : '最大数量',
-				align : 'center',
-				width : 100
+				width : 150
 			}
+			
 			] ],
 			onDblClickRow : function(rowIndex, rowData) {
 				view(rowData.id);
@@ -96,67 +106,27 @@
 				width : 600,
 				height : 400,
 				modal : true,
-				href : '<%=path%>/wm/view?id=' + id,
+				href : '<%=path%>/notice/view.do?id=' + id,
 			onClose : function() {
 				demo_window_close();
 			}
 		});
 	}
-
-	//添加
-	function demo_add(){
-		
-		win= $('<div/>').dialog({
-			title:'添加',
-			width:600,
-			height:400,
-			modal:true,
-			href:'<%=path%>/wm/toAdd',
-			onClose:function(){
+		//添加父级菜单
+		function demo_add(){
+			  win_add = $('<div/>').dialog({
+				title : '添加根级菜单',
+				width : 600,
+				height : 400,
+				modal : true,
+				href : '<%=path%>/notice/notice_add.do?',
+				onClose : function() {
 				demo_window_close();
-			}
-		});
-	}	
-	//修改
+				}
+			});
+		};
+	
 
-	function demo_edit(id) {
-		var row = $('#demo_datagrid').datagrid('getChecked');
-		if (row == ''||row.length!=1) {
-			$.messager.alert('提示框', '请选择一行数据！');
-			return false;
-		}
-		win= $('<div/>').dialog({
-			title:'编辑',
-			width:600,
-			height:400,
-			modal:true,
-			href:'<%=path%>/wm/toUpdate?id='+row[0].id,
-			onClose:function(){
-				demo_window_close();
-			}
-		});
-	}
-	//提交修改
-	function update_demo_submit(){
-		var formdate = $("#demo_update_form").serializeArray();
-		var url = "<%=path%>/wm/update";
-		$.post(url,formdate,function(json){
-			var flag = json.flag;
-			var msg = json.msg;
-			if(flag == "false"){
-				$.messager.alert("错误提示", "修改失败， 原因是" + msg, "error",
-						function() {
-						})
-			}
-			else{
-				$.messager.alert("提示", "修改成功", "info", function() {
-				})
-				win_update.dialog("destroy");
-				$("#demo_datagrid").datagrid("reload");
-			}
-			
-		},"json")		
-	}
 
 	//删除
 	function demo_delete() {
@@ -173,7 +143,7 @@
 			}
 		}
 	
-		var url = '<%=path%>/wm/toDelete?ids='+ids;
+		var url = '<%=path%>/notice/toDelete.do?ids='+ids;
 		$.messager.confirm('确认', '您是否要删除？', function(r) {
 			if (r) {
 			$.post(url,ids,function(json){
@@ -197,15 +167,15 @@
 		}
 	//条件查询
 	function demoSearch() {
-		$('#demo_datagrid').datagrid('load', {wmId:$('#wmId').val()});		
+		$('#demo_datagrid').datagrid('load', {notice_title:$('#notice_title').val()});		
 	}
 
 	//重置
 	function demoReset() {
 		$('#demo_list_form').form('reset');
-		$('#demo_datagrid').datagrid('load', {wmId:$('#wmId').val()});
+		$('#demo_datagrid').datagrid('load', {notice_title:$('#notice_title').val()});
 	}
-
+	
 
 	//销毁窗口
 	function demo_window_close() {
@@ -231,8 +201,8 @@
 			<form id="demo_list_form" method="post">
 				<table cellpadding="0" cellspacing="1" class="formtable">
 					<tr>
-						<td align="center" width="10%">仓储编号</td>
-						<td class="value" width="20%"><input id="wmId" name="wmId"
+						<td align="center" width="10%">标题</td>
+						<td class="value" width="20%"><input id="notice_title" name="notice_title"
 							class="easyui-validatebox"></td>
 						</td>
 						<td colspan="2" align="center" class="value" width="40%"><a

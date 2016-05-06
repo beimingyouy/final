@@ -28,7 +28,7 @@
 		var toolbar =  new Array();
 		$(function(){
 			var toolbar = [
-		              {id:"add", 		text:"出库",		iconCls:'icon-add',
+		              {id:"add", 		text:"运输出库",		iconCls:'icon-add',
 		          	   handler: 		function(){
 		          		 					demo_edit();
 		          		   				}},
@@ -192,6 +192,10 @@
 			$.messager.alert('提示框', '该申请单已经审核，如审核失败请重新提交申请单');
 			return false;
 		}
+		if(row[0].state==3){
+			$.messager.alert('提示框', '该出库单申请单已完成！');
+			return false;
+		}
 		win= $('<div/>').dialog({
 			title:'编辑',
 			width:600,
@@ -208,7 +212,7 @@
 		var row = $('#demo_datagrid').datagrid('getChecked');
 		
 		if(row[0].state!=1){
-			$.messager.alert('提示框', '只有出库成功的申请单才可以确认。');
+			$.messager.alert('提示框', '只有出库申请成功的申请单才可以确认。');
 			return false;
 		}
 		
