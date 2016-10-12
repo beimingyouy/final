@@ -21,7 +21,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
   
   <body>
-  405！TAT!
-  如果被跳转该页面，证明你没有之前页面的权限！ <br>
+   如果你看到这个页面，证明你有所有权限。 <br>
   </body>
 </html>

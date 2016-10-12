@@ -21,7 +21,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
   
   <body>
-  405！TAT!
-  如果被跳转该页面，证明你没有之前页面的权限！ <br>
+  测试shiro，如果访问该页面被强制跳转405，则shiro拦截成功！ <br>
   </body>
 </html>
